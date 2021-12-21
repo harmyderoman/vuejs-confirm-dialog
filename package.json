@@ -1,18 +1,36 @@
 {
   "name": "vuejs-confirm-dialog",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+  "version": "1.0.0-alpha",
+  "main" : ".dist/vuejs-confirm-dialog.common.js",
+  "files": ["dist/*"],
+  "private": false,
+  "author": {
+    "name": "Roman Harmyder"
   },
+  "keywords": ["vue.js", "vue", "dialogs", "vue-use"],
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve --open demos/vue3/main",
+    "build" : "vue-cli-service build --target lib ./src/main.ts",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+    },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "vue-demi": "latest",
+    "@vueuse/core": "^7.4.0"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0",
+    "vue": "^2.0.0 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
   },
   "devDependencies": {
+    "core-js": "^3.6.5",
+    "vue": "^3.0.0",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
