@@ -1,38 +1,54 @@
-import { DefineComponent, ref } from "vue-demi"
-import { useDialogWrapper } from "./useDialogWrapper"
-import { useConfirmDialog } from "@vueuse/core"
+import { DefineComponent, ref, Prop, ComputedRef } from 'vue-demi'
+import { useDialogWrapper } from './useDialogWrapper'
+import {
+  EventHookOn,
+  useConfirmDialog,
+  UseConfirmDialogRevealResult,
+} from '@vueuse/core'
+
+export interface PropsData {
+  [key: string]: Prop<unknown, unknown>
+}
+export interface CreateFnReturn {
+  reveal: (
+    data: PropsData
+  ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
+
+  isRevealed: ComputedRef<boolean>
+
+  onConfirm: EventHookOn
+
+  onCancel: EventHookOn
+}
 
 export const create = function (
   component: DefineComponent,
-  props = {} as any
-) {
-
+  props: PropsData = {}
+): CreateFnReturn {
   const propsRef = ref(props)
 
-  const { addComponent, createRenderFunction } = useDialogWrapper()
-  const {
-    reveal,
-    isRevealed,
-    onConfirm,
-    onReveal,
-    onCancel,
-    confirm,
-    cancel } = useConfirmDialog()
+  const { addComponent } = useDialogWrapper()
+  const { reveal, isRevealed, onConfirm, onReveal, onCancel, confirm, cancel } =
+    useConfirmDialog()
 
   onReveal((data) => {
-    console.log('on reveal:')
-    console.log(data)
     for (const prop in data) {
       propsRef.value[prop] = data[prop]
     }
   })
 
-  addComponent({ component, isRevealed, confirm, cancel, props: propsRef.value })
+  addComponent({
+    component,
+    isRevealed,
+    confirm,
+    cancel,
+    props: propsRef.value,
+  })
 
   return {
     reveal,
     isRevealed,
     onConfirm,
-    onCancel
+    onCancel,
   }
 }
