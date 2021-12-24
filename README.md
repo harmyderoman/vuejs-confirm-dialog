@@ -1,29 +1,8 @@
 # vuejs-confirm-dialog
 
-## Project setup
-```
-npm install
-```
+Simple library for creating reusable dialogs in Vue 3. Made with new Composition API.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+> Warning! Work in progress. Don't use it in production.
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Powered by vue-demi, so you can use it in Vue 2 but required `@vue/composition-api` >= v1.1
+This is a library for creating reusable dialogs. It promisifies your component, so you can work with it like with promises or work with dialog hooks that the library generates for you.
