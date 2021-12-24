@@ -1,12 +1,8 @@
-import { shallowMount } from "@vue/test-utils";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { shallowMount } from '@vue/test-utils'
+import DialogsWrapper from '../../src/DialogsWrapper.vue'
 
-describe("HelloWorld.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
-    const wrapper = shallowMount(HelloWorld, {
-      props: { msg },
-    });
-    expect(wrapper.text()).toMatch(msg);
-  });
-});
+describe('DialogsWrapper.vue', () => {
+  it('testable', () => {
+    expect(true).toBe(true)
+  })
+})
