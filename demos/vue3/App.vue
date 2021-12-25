@@ -24,16 +24,20 @@ const showDialog = async () => {
 </script>
 
 <template>
-  <h1>Hello</h1>
-  <button @click="showDialog">Dialog</button>
-  <button @click="showDialog2">Dialog 2</button>
+  <div class="card shadow-xl">
+    <div class="justify-end card-body">
+      <h1 class="card-title">Hello!</h1>
+      <p>For prompt Modal Dialog press one of the buttons below</p>
+      <div class="card-actions">
+        <button class="btn btn-primary" @click="showDialog">Dialog</button>
+        <button class="btn btn-secondary" @click="showDialog2">Dialog 2</button>
+      </div>
+    </div>
+  </div>
   <DialogsWrapper />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+<style>
+@import 'https://cdn.jsdelivr.net/npm/daisyui@1.19.0/dist/full.css';
+@import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css';
 </style>
