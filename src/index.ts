@@ -1,4 +1,4 @@
-import { DefineComponent, ref, Prop, ComputedRef } from 'vue-demi'
+import { DefineComponent, ref, Prop, ComputedRef, Ref } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -6,7 +6,7 @@ import {
   UseConfirmDialogRevealResult,
 } from '@vueuse/core'
 
-export interface PropsData {
+export type PropsData = {
   [key: string]: Prop<unknown, unknown>
 }
 export interface CreateFnReturn {
@@ -25,19 +25,19 @@ export const create = function (
   component: DefineComponent,
   props: PropsData = {}
 ): CreateFnReturn {
-  const propsRef = ref(props)
+  const propsRef: Ref<PropsData> = ref(props)
 
-  const { addComponent } = useDialogWrapper()
+  const { addDialog } = useDialogWrapper()
   const { reveal, isRevealed, onConfirm, onReveal, onCancel, confirm, cancel } =
     useConfirmDialog()
 
-  onReveal((data) => {
+  onReveal((data: PropsData) => {
     for (const prop in data) {
       propsRef.value[prop] = data[prop]
     }
   })
 
-  addComponent({
+  addDialog({
     component,
     isRevealed,
     confirm,

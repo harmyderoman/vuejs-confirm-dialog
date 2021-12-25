@@ -1,19 +1,28 @@
 import { Component, Ref, shallowRef } from 'vue-demi'
+import { PropsData } from './index'
 
-export interface useDialogWrapperReturn {
-  DialogsStore: Ref<Component[]>
-  addComponent: (component: Component) => void
+export interface UseDialogWrapperReturn {
+  DialogsStore: Ref<DialogData[]>
+  addDialog: (data: DialogData) => void
 }
 
-const DialogsStore: Ref<Component[]> = shallowRef([])
+export interface DialogData {
+  component: Component
+  isRevealed: Ref<boolean>
+  confirm: (data: PropsData) => void
+  cancel: (data: PropsData) => void
+  props: PropsData
+}
 
-export const useDialogWrapper = function (): useDialogWrapperReturn {
-  const addComponent = function (component: Component) {
-    DialogsStore.value.push(component)
+const DialogsStore: Ref<DialogData[]> = shallowRef([])
+
+export const useDialogWrapper = function (): UseDialogWrapperReturn {
+  const addDialog = function (data: DialogData) {
+    DialogsStore.value.push(data)
   }
 
   return {
     DialogsStore,
-    addComponent,
+    addDialog,
   }
 }
