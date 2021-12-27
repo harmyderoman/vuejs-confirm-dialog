@@ -1,8 +1,7 @@
-import { PropsData } from './../../src/index'
-import { useDialogWrapper } from '../../src/useDialogWrapper'
+import { PropsData, useDialogWrapper } from './../../src/index'
 import DialogsWrapper from '../../src/DialogsWrapper.vue'
 import { useSetup } from '../utils'
-import { Component, defineComponent } from 'vue-demi'
+import { Component } from 'vue-demi'
 import { useConfirmDialog } from '@vueuse/core'
 
 describe('DialogsWrapper.vue', () => {
@@ -20,7 +19,7 @@ describe('useDialogWrapper', () => {
     const simpleComponent = {} as Component
     const props = {} as PropsData
 
-    const store = useSetup(() => {
+    const wrapper = useSetup(() => {
       const { DialogsStore, addDialog } = useDialogWrapper()
       const { isRevealed, confirm, cancel } = useConfirmDialog()
       addDialog({
@@ -34,6 +33,6 @@ describe('useDialogWrapper', () => {
       return { DialogsStore }
     })
 
-    expect(store.DialogsStore[0].component).toBe(simpleComponent)
+    expect(wrapper.DialogsStore[0].component).toBe(simpleComponent)
   })
 })

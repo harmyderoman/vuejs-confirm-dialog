@@ -1,15 +1,21 @@
 <script setup>
 import ModalWindow from './ModalWindow.vue'
+import { ref } from 'vue'
 
-import { create } from '../../src/index'
+import { createConfirmDialog } from '../../src/index'
 import DialogsWrapper from '../../src/DialogsWrapper.vue'
 // import { reactive, shallowRef } from 'vue'
-
-const { reveal, onConfirm, onCancel } = create(ModalWindow)
-const { reveal: showDialog2 } = create(ModalWindow, {
-  msg: 'Modal N2',
+const show = ref(true)
+const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalWindow)
+const { reveal: showDialog2, onConfirm: onConfirm2 } = createConfirmDialog(
+  ModalWindow,
+  {
+    msg: 'Modal N2',
+  }
+)
+onConfirm2(() => {
+  console.log('Confirmed 2!')
 })
-
 onConfirm(() => {
   console.log('Confirmed!')
 })

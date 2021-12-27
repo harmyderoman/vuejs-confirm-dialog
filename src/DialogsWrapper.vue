@@ -11,10 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { unref, Ref } from 'vue-demi'
+import { unref, Ref, UnwrapRef } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 
-function unrefValue<T>(val: Ref<T>): T {
+function unrefValue<T>(val: Ref<T>): UnwrapRef<T> {
   return unref(val)
 }
 

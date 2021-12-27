@@ -1,4 +1,4 @@
-import { DefineComponent, ref, Prop, ComputedRef, Ref } from 'vue-demi'
+import { ref, Prop, ComputedRef, Ref, Component } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -9,7 +9,7 @@ import {
 export type PropsData = {
   [key: string]: Prop<unknown, unknown>
 }
-export interface CreateFnReturn {
+export interface CreateConfirmDialogFnReturn {
   reveal: (
     data: PropsData
   ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
@@ -21,10 +21,10 @@ export interface CreateFnReturn {
   onCancel: EventHookOn
 }
 
-export const create = function (
-  component: DefineComponent,
+export const createConfirmDialog = function (
+  component: Component,
   props: PropsData = {}
-): CreateFnReturn {
+): CreateConfirmDialogFnReturn {
   const propsRef: Ref<PropsData> = ref(props)
 
   const { addDialog } = useDialogWrapper()
@@ -52,3 +52,10 @@ export const create = function (
     onCancel,
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const create = function (component: Component, props: PropsData = {}) {
+  return createConfirmDialog(component, props)
+}
+
+export { useDialogWrapper }
