@@ -12,16 +12,22 @@ This is a library for creating reusable dialogs. It takes your modal component a
 ## Installation
 
 ```bash
-#Use npm
 npm i vuejs-confirm-dialog
-
-#Use yarn
-yarn add vuejs-confirm-dialog
 ```
 
-## How to use it
+## Usage
 
-Check this Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/App.vue)
+Check this Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/App.vue).
+
+## Demo
+
+Clone the project and run follow command to see the demo:
+
+```bash
+npm run serve
+```
+
+Demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 ## Thanks
 
