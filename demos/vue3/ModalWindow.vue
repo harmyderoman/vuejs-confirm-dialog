@@ -1,15 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue'
 
 defineProps({
-  show: Boolean,
+  show: Boolean, // must prop to make dialog work
   msg: {
     type: String,
     default: 'Modal Dialog',
   },
 })
 
-const emit = defineEmits(['confirm', 'cancel'])
+const emit = defineEmits(['confirm', 'cancel']) // must emits
 </script>
 
 <template>

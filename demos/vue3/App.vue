@@ -1,45 +1,61 @@
-<script setup>
-import ModalWindow from './ModalWindow.vue'
+<script lang="ts" setup>
+import ModalWindow from './ModalWindow.vue' // your modal component
+import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
+import DialogsWrapper from '../../src/DialogsWrapper.vue' // same
 import { ref } from 'vue'
+import { debouncedWatch } from '@vueuse/core'
 
-import { createConfirmDialog } from '../../src/index'
-import DialogsWrapper from '../../src/DialogsWrapper.vue'
-// import { reactive, shallowRef } from 'vue'
-const show = ref(true)
+const defaultMessage = 'To prompt Modal Dialog press one of the buttons below:'
+const message = ref(defaultMessage)
+
+// Example how to use `createConfirmDialog` with hooks
+// pass your modal component to the function
 const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalWindow)
-const { reveal: showDialog2, onConfirm: onConfirm2 } = createConfirmDialog(
-  ModalWindow,
-  {
-    msg: 'Modal N2',
-  }
-)
-onConfirm2(() => {
-  console.log('Confirmed 2!')
-})
 onConfirm(() => {
-  console.log('Confirmed!')
+  message.value = 'Confirmed!'
 })
 onCancel(() => {
-  console.log('Canceled!')
+  message.value = 'Canceled!'
 })
+
+// Example how to use it in Promise style
+// We are reusing the same component
+// You need to rename `reveal` to avoid conflict with the first usage
+// Pass new props of modal component in a second argument if you need to
+const { reveal: reveal2 } = createConfirmDialog(ModalWindow, {
+  msg: 'Modal #2',
+})
+
+// Build an async function to use it in a template
 const showDialog = async () => {
-  const { data, isCanceled } = await reveal({ msg: 'New Msg!' })
-  if (!isCanceled) console.log('Confirmed!')
-  else console.log('Canceled!')
+  const { data, isCanceled } = await reveal2({ msg: 'New Message!' }) // pass new props to modal component
+  if (!isCanceled) message.value = 'Confirmed dialog #2!'
+  else message.value = 'Canceled dialog #2!'
 }
+
+// Reset message after 2000 ms
+debouncedWatch(
+  message,
+  () => {
+    message.value = defaultMessage
+  },
+  { debounce: 2000 }
+)
 </script>
 
 <template>
   <div class="card shadow-xl">
     <div class="justify-end card-body">
-      <h1 class="card-title">Hello!</h1>
-      <p>For prompt Modal Dialog press one of the buttons below</p>
+      <h1 class="card-title">Hi!</h1>
+      <p class="text-error">{{ message }}</p>
       <div class="card-actions">
-        <button class="btn btn-primary" @click="showDialog">Dialog</button>
-        <button class="btn btn-secondary" @click="showDialog2">Dialog 2</button>
+        <button class="btn btn-primary" @click="reveal">Dialog</button>
+        <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
       </div>
     </div>
   </div>
+
+  <!-- put it in the template of your App.vue file to make this library work -->
   <DialogsWrapper />
 </template>
 
