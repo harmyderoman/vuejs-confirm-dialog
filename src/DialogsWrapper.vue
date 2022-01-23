@@ -1,7 +1,7 @@
 <template>
   <component
     v-for="dialog in DialogsStore"
-    :is="dialog.component"
+    :is="dialog.dialog"
     :show="unrefValue(dialog.isRevealed)"
     v-bind="dialog.props"
     @confirm="dialog.confirm"

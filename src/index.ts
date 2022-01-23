@@ -5,7 +5,7 @@ import {
 } from './createConfirmDialog'
 import DialogsWrapper from './DialogsWrapper.vue'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line
 function install(app: any) {
   app.component('DialogsWrapper', DialogsWrapper)
 }
