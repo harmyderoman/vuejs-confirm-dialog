@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ModalWindow from './ModalWindow.vue' // your modal component
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
-import DialogsWrapper from '../../src/DialogsWrapper.vue' // same
+//import DialogsWrapper from '../../src/index' // same optional, if you didnt install the plugin
 import { ref } from 'vue'
 import { debouncedWatch } from '@vueuse/core'
 
