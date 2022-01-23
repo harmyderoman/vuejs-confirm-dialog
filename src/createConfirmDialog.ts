@@ -22,7 +22,7 @@ export interface CreateConfirmDialogFnReturn {
 }
 
 export const createConfirmDialog = function (
-  component: Component,
+  dialog: Component,
   props: PropsData = {}
 ): CreateConfirmDialogFnReturn {
   const propsRef: Ref<PropsData> = ref(props)
@@ -38,7 +38,7 @@ export const createConfirmDialog = function (
   })
 
   addDialog({
-    component,
+    dialog,
     isRevealed,
     confirm,
     cancel,
