@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    es2021: true,
   },
   extends: [
     'plugin:vue/vue3-essential',
@@ -17,8 +17,8 @@ module.exports = {
     indent: ['error', 2],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-console': import.meta.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': import.meta.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
   overrides: [
     {
