@@ -15,6 +15,30 @@ This is a library for creating reusable dialogs. It takes your modal component a
 npm i vuejs-confirm-dialog
 ```
 
+Install the plugin:
+
+```js
+// main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import * as ConfirmDialog from 'vuejs-confirm-dialog'
+
+createApp(App).use(ConfirmDialog).mount('#app')
+```
+
+Add `DialodsWrapper` to `App.vue`:
+
+```html
+<template>
+  <div class="app">
+  </div>
+
+  <!-- put it in the template of your App.vue file to make this library work -->
+  <!-- Don't need import the component, if you installed the plugin -->
+  <DialogsWrapper />
+</template>
+```
+
 ## Usage
 
 Check this Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/App.vue).
@@ -24,7 +48,7 @@ Check this Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/
 Clone the project and run follow command to see the demo:
 
 ```bash
-npm run serve
+pnpm run demo
 ```
 
 Demo is styled by beautiful [daisyUI](https://daisyui.com/).
