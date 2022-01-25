@@ -1,7 +1,14 @@
 {
 	"name": "vuejs-confirm-dialog",
 	"version": "0.1.0-alpha",
-	"main": ".dist/vuejs-confirm-dialog.common.js",
+	"main": ".dist/vuejs-confirm-dialog.umd.js",
+	"module": "./dist/vuejs-confirm-dialog.es.js",
+	"exports": {
+		".": {
+			"import": "./dist/vuejs-confirm-dialog.es.js",
+			"require": "./dist/vuejs-confirm-dialog.umd.js"
+		}
+	},
 	"files": [
 		"dist/*"
 	],
@@ -17,14 +24,14 @@
 	],
 	"license": "MIT",
 	"scripts": {
-		"serve": "vue-cli-service serve --open demos/vue3/main",
-		"build": "vue-cli-service build --target lib ./src/index.ts",
-		"lint": "vue-cli-service lint",
-		"test:unit": "vue-cli-service test:unit"
+		"demo": "vite",
+		"vite-build": "vite build",
+		"lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+		"test:unit": "pnpm test:unit"
 	},
 	"dependencies": {
-		"vue-demi": "latest",
-		"@vueuse/core": "^7.4.0"
+		"@vueuse/core": "^7.5.4",
+		"vue-demi": "latest"
 	},
 	"peerDependencies": {
 		"@vue/composition-api": "^1.0.0",
@@ -36,27 +43,23 @@
 		}
 	},
 	"devDependencies": {
-		"core-js": "^3.6.5",
-		"vue": "^3.0.0",
-		"@types/jest": "^24.0.19",
-		"@typescript-eslint/eslint-plugin": "^4.18.0",
-		"@typescript-eslint/parser": "^4.18.0",
-		"@vue/cli-plugin-babel": "~4.5.0",
-		"@vue/cli-plugin-eslint": "~4.5.0",
-		"@vue/cli-plugin-typescript": "~4.5.0",
-		"@vue/cli-plugin-unit-jest": "~4.5.0",
-		"@vue/cli-service": "~4.5.0",
-		"@vue/compiler-sfc": "^3.0.0",
+		"@types/jest": "^24.9.1",
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
+		"@vitejs/plugin-vue": "^1.10.2",
+		"@vue/compiler-sfc": "^3.2.29",
 		"@vue/eslint-config-prettier": "^6.0.0",
 		"@vue/eslint-config-typescript": "^7.0.0",
-		"@vue/test-utils": "^2.0.0-0",
-		"eslint": "^6.7.2",
-		"eslint-plugin-prettier": "^3.3.1",
-		"eslint-plugin-vue": "^7.0.0",
-		"prettier": "^2.2.1",
-		"sass": "^1.26.5",
-		"sass-loader": "^8.0.2",
-		"typescript": "~4.1.5",
-		"vue-jest": "^5.0.0-0"
+		"@vue/test-utils": "^2.0.0-rc.18",
+		"eslint": "^8.7.0",
+		"eslint-plugin-prettier": "^3.4.1",
+		"eslint-plugin-vue": "^8.3.0",
+		"prettier": "^2.5.1",
+		"sass": "^1.49.0",
+		"typescript": "~4.1.6",
+		"vite": "^2.7.13",
+		"vite-plugin-vue2": "1.9.0",
+		"vue": "^3.2.29",
+		"vue-jest": "^5.0.0-alpha.10"
 	}
 }
