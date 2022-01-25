@@ -1,12 +1,12 @@
 <template>
   <component
-    v-for="dialog in DialogsStore"
+    v-for="(dialog, index) in DialogsStore"
     :is="dialog.dialog"
     :show="unrefValue(dialog.isRevealed)"
     v-bind="dialog.props"
     @confirm="dialog.confirm"
     @cancel="dialog.cancel"
-    :key="dialog"
+    :key="index"
   ></component>
 </template>
 
