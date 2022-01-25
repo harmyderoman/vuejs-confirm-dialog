@@ -7,7 +7,7 @@ export interface UseDialogWrapperReturn {
 }
 
 export interface DialogData {
-  component: Component
+  dialog: Component
   isRevealed: Ref<boolean>
   confirm: (data: PropsData) => void
   cancel: (data: PropsData) => void
