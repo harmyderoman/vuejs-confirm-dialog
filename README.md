@@ -7,7 +7,7 @@ Powered by `vue-demi`, so you can use it in Vue 2, but this required `@vue/compo
 
 ## About
 
-This is a library for creating reusable dialogs. It takes your modal component and build structure for dialogs that wait for user confirmation. You can work with it like with promises or work with dialog hooks that the library generates for you.
+This is a library for creating reusable dialogs. It takes your modal component and builds a structure for dialogs that wait for user confirmation. You can work with it like with promises or work with dialog hooks that the library generates for you.
 
 ## Installation
 
@@ -29,6 +29,7 @@ createApp(App).use(ConfirmDialog).mount('#app')
 Add `DialodsWrapper` to `App.vue`:
 
 ```html
+//App.vue
 <template>
   <div class="app">
   </div>
@@ -41,11 +42,49 @@ Add `DialodsWrapper` to `App.vue`:
 
 ## Usage
 
-Check this Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/App.vue).
+Build Modal Window. It must contain prop `show` and emits `confirm` and `cancel`. Put `v-if="show"` in its template for conditional rendering.
+
+```html
+// ModalWindow.vue
+<script setup>
+ defineProps({
+		show: Boolean,
+	})
+
+	const emit = defineEmits(['confirm', 'cancel'])
+</script>
+
+<template>
+	<div v-if="show">
+    <!-- Some message -->
+		<button @click="emit('confirm', true)">Confirm</button><br />
+		<button @click="emit('cancel', false)">Cancel</button>
+	</div>
+</template>
+```
+
+Use this modal window wherever you want in your project:
+
+```html
+<script setup>
+import ModalWindow from 'path/to/ModalWindow.vue'
+import { createConfirmDialog } from 'vuejs-create-dialog'
+
+const { reveal, onConfirm } = createConfirmDialog(ModalWindow)
+
+reveal()
+
+onConfirm(() => {
+  console.log('Confirmed!')
+})
+</script>
+```
+
+Check this full Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3).
 
 ## Demo
 
-Clone the project and run follow command to see the demo:
+Clone the project and run the following command to see the demo:
 
 ```bash
 pnpm run demo
@@ -55,4 +94,4 @@ Demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 ## Thanks
 
-Inspired by [`Vueuse`](https://github.com/vueuse/vueuse) and [`vue-modal-dialogs`](https://github.com/hjkcai/vue-modal-dialogs). Thank you ❤️!
+Inspired by [`Vueuse`](https://github.com/vueuse/vueuse) and [`vue-modal-dialogs`](https://github.com/hjkcai/vue-modal-dialogs). Thanks to all contributors to these projects ❤️!
