@@ -45,7 +45,7 @@ Add `DialodsWrapper` to `App.vue`:
 Build Modal Window. It must contain prop `show` and emits `confirm` and `cancel`. Put `v-if="show"` in its template for conditional rendering.
 
 ```html
-// ModalWindow.vue
+<!-- ModalWindow.vue -->
 <script setup>
  defineProps({
 		show: Boolean,
