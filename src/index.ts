@@ -4,9 +4,9 @@ import {
   CreateConfirmDialogFnReturn,
 } from './createConfirmDialog'
 import DialogsWrapper from './DialogsWrapper.vue'
+import { App } from 'vue-demi'
 
-// eslint-disable-next-line
-function install(app: any) {
+function install(app: App) {
   app.component('DialogsWrapper', DialogsWrapper)
 }
 

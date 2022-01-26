@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "declaration": true,
     "types": [
       "webpack-env",
       "jest"
@@ -31,6 +32,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src/**/*.d.ts",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
