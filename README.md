@@ -47,19 +47,19 @@ Build Modal Window. It must contain prop `show` and emits `confirm` and `cancel`
 ```html
 <!-- ModalWindow.vue -->
 <script setup>
- defineProps({
-		show: Boolean,
-	})
+  defineProps({
+    show: Boolean,
+  })
 
-	const emit = defineEmits(['confirm', 'cancel'])
+  const emit = defineEmits(['confirm', 'cancel'])
 </script>
 
 <template>
-	<div v-if="show">
+  <div v-if="show">
     <!-- Some message -->
-		<button @click="emit('confirm', true)">Confirm</button><br />
-		<button @click="emit('cancel', false)">Cancel</button>
-	</div>
+    <button @click="emit('confirm', true)">Confirm</button><br />
+    <button @click="emit('cancel', false)">Cancel</button>
+  </div>
 </template>
 ```
 
