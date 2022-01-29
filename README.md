@@ -68,7 +68,7 @@ Use this modal window wherever you want in your project:
 ```html
 <script setup>
 import ModalWindow from 'path/to/ModalWindow.vue'
-import { createConfirmDialog } from 'vuejs-create-dialog'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
 
 const { reveal, onConfirm } = createConfirmDialog(ModalWindow)
 
