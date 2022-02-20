@@ -14,7 +14,7 @@
 import { unref, Ref, UnwrapRef } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 
-function unrefValue<T>(val: Ref<T>): UnwrapRef<T> {
+function unrefValue<T>(val: Ref<T>): T {
   return unref(val)
 }
 

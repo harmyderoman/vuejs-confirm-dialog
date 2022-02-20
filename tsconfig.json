@@ -10,12 +10,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "declaration": true,
-    "types": [
-      "webpack-env",
-      "jest"
-    ],
+    "declarationDir": "./dist",
+    "typeRoots": ["src"],
+    "outDir": "./dist",
+    "rootDir": "./src",
     "paths": {
       "@/*": [
         "src/*"
@@ -37,6 +37,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "./tests"
   ]
 }
