@@ -18,6 +18,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  optimizeDeps: {
+    include: [
+      'vue-demi'
+    ]
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
@@ -32,5 +37,8 @@ export default defineConfig({
         },
       },
     },
+    commonjsOptions: {
+      include: [/vue-demi/, /node_modules/]
+    }
   },
 })
