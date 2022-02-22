@@ -55,7 +55,7 @@ debouncedWatch(
       <p class="text-error">{{ message }}</p>
       <div class="card-actions">
         <button class="btn btn-primary" @click="reveal">Dialog</button>
-        <button class="btn btn-secondary" @click="reveal2">Dialog 2</button>
+        <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
       </div>
     </div>
   </div>
