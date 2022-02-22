@@ -39,7 +39,7 @@ createApp(App).use(ConfirmDialog).mount('#app')
 
 ### Step 2
 
-Add `DialodsWrapper` to `App.vue`:
+Add `DialodsWrapper` to `App.vue` template:
 
 ```html
 // App.vue
@@ -53,7 +53,7 @@ Add `DialodsWrapper` to `App.vue`:
 </template>
 ```
 
-And thats it. Now you can use it.
+And that's it. Now you can use it.
 
 ## Usage
 
@@ -101,7 +101,7 @@ Clone the project and run the following command to see the demo:
 pnpm run demo
 ```
 
-Demo is styled by beautiful [daisyUI](https://daisyui.com/).
+The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 ## Roadmap
 
