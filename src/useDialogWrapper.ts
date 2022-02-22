@@ -1,9 +1,10 @@
-import { Component, Ref, shallowRef } from 'vue-demi'
+import { Component, Ref, ref, shallowRef } from 'vue-demi'
 import { PropsData } from './index'
 
 export interface UseDialogWrapperReturn {
   DialogsStore: Ref<DialogData[]>
-  addDialog: (data: DialogData) => void
+  addDialog: (data: DialogData) => void,
+  removeDialog: () => void
 }
 
 export interface DialogData {
@@ -14,15 +15,26 @@ export interface DialogData {
   props: PropsData
 }
 
-const DialogsStore: Ref<DialogData[]> = shallowRef([])
+const DialogsStore: Ref<DialogData[]> = ref([])
 
 export const useDialogWrapper = function (): UseDialogWrapperReturn {
+
+  const dialogIndex: Ref<number> = ref(-1)
+
   const addDialog = function (data: DialogData) {
+    dialogIndex.value = DialogsStore.value.length
     DialogsStore.value.push(data)
+  }
+
+  const removeDialog = function (){
+    if(dialogIndex.value > -1){
+      DialogsStore.value.splice( dialogIndex.value, 1)
+    }
   }
 
   return {
     DialogsStore,
     addDialog,
+    removeDialog
   }
 }

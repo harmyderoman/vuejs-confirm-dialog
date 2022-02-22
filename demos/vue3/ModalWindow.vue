@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from 'vue'
-
 defineProps({
-  show: Boolean, // must prop to make dialog work
+  //show: Boolean, // no longer need `show` prop and `v-if` on template
   msg: {
     type: String,
-    default: 'Modal Dialog',
+    default: 'The modal dialog message',
   },
 })
 
@@ -13,7 +11,7 @@ const emit = defineEmits(['confirm', 'cancel']) // must emits
 </script>
 
 <template>
-  <div v-if="show" class="my-modal">
+  <div class="my-modal">
     <div class="modal-box">
       <p>{{ msg }}</p>
       <div class="modal-action">
