@@ -1,6 +1,6 @@
 {
 	"name": "vuejs-confirm-dialog",
-	"version": "0.3.0",
+	"version": "0.2.0",
 	"main": "./dist/vuejs-confirm-dialog.umd.js",
 	"module": "./dist/vuejs-confirm-dialog.es.js",
 	"types": "./dist/index.d.ts",
