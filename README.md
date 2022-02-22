@@ -1,6 +1,6 @@
 # vuejs-confirm-dialog
 
-This is a library for creating reusable dialogs in Vue 3.
+This library just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js.
 
 Made with Composition API.
 
@@ -14,9 +14,17 @@ This is a library for creating reusable dialogs. It takes your modal component a
 
 ## Installation
 
+in 3 steps
+
+### Step 0
+
+Add the package to your `node_modules`
+
 ```bash
 npm i vuejs-confirm-dialog
 ```
+
+### Step 1
 
 Install the plugin:
 
@@ -29,10 +37,12 @@ import * as ConfirmDialog from 'vuejs-confirm-dialog'
 createApp(App).use(ConfirmDialog).mount('#app')
 ```
 
-Add `DialodsWrapper` to `App.vue`:
+### Step 2
+
+Add `DialodsWrapper` to `App.vue` template:
 
 ```html
-//App.vue
+// App.vue
 <template>
   <div class="app">
   </div>
@@ -43,23 +53,21 @@ Add `DialodsWrapper` to `App.vue`:
 </template>
 ```
 
+And that's it. Now you can use it.
+
 ## Usage
 
-Build Modal Window. It must contain prop `show` and emits `confirm` and `cancel`. Put `v-if="show"` in its template for conditional rendering.
+Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must contain~~ ~~prop `show`~~. ~~Put `v-if="show"` in its template for conditional rendering~~(no longer need to).
 
 ```html
 <!-- ModalWindow.vue -->
 <script setup>
-  defineProps({
-    show: Boolean,
-  })
-
   const emit = defineEmits(['confirm', 'cancel'])
 </script>
 
 <template>
-  <div v-if="show">
-    <!-- Some message -->
+  <div>
+    <!-- The modal component body -->
     <button @click="emit('confirm', true)">Confirm</button><br />
     <button @click="emit('cancel', false)">Cancel</button>
   </div>
@@ -83,7 +91,7 @@ onConfirm(() => {
 </script>
 ```
 
-Check this full Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3).
+For more info check this full Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3).
 
 ## Demo
 
@@ -93,8 +101,23 @@ Clone the project and run the following command to see the demo:
 pnpm run demo
 ```
 
-Demo is styled by beautiful [daisyUI](https://daisyui.com/).
+The demo is styled by beautiful [daisyUI](https://daisyui.com/).
+
+## Roadmap
+
+*   [x] Make it work!
+
+*   [x] Make it work without `show` prop
+
+*   [ ] TSDoc
+
+*   [ ] Improve docs( reuse, passing props ...)
+
+*   [ ] Change testing tools to Vitest
+
+*   [ ] Improove tests
+
 
 ## Thanks
 
-Inspired by [`Vueuse`](https://github.com/vueuse/vueuse) and [`vue-modal-dialogs`](https://github.com/hjkcai/vue-modal-dialogs). Thanks to all contributors to these projects ❤️!
+Inspired by [`Vueuse`](https://github.com/vueuse/vueuse) and [`vue-modal-dialogs`](https://github.com/hjkcai/vue-modal-dialogs). Thanks to all creators of these projects ❤️!

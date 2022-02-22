@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ModalWindow from './ModalWindow.vue' // your modal component
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
-//import DialogsWrapper from '../../src/index' // same optional, if you didnt install the plugin
+// import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
 import { ref } from 'vue'
 import { debouncedWatch } from '@vueuse/core'
 
@@ -17,6 +17,11 @@ onConfirm(() => {
 onCancel(() => {
   message.value = 'Canceled!'
 })
+
+// For reusing component just call `reveal` again and pass to it object of props.
+const reuse = () => {
+  reveal({msg: 'Reuse Modal Component'})
+}
 
 // Example how to use it in Promise style
 // We are reusing the same component
@@ -50,7 +55,7 @@ debouncedWatch(
       <p class="text-error">{{ message }}</p>
       <div class="card-actions">
         <button class="btn btn-primary" @click="reveal">Dialog</button>
-        <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
+        <button class="btn btn-secondary" @click="reveal2">Dialog 2</button>
       </div>
     </div>
   </div>
