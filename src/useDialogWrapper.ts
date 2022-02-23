@@ -1,4 +1,4 @@
-import { Component, Ref, ref, shallowRef } from 'vue-demi'
+import { Component, markRaw, Ref, ref, shallowRef } from 'vue-demi'
 import { PropsData } from './index'
 
 export interface UseDialogWrapperReturn {
@@ -23,7 +23,7 @@ export const useDialogWrapper = function (): UseDialogWrapperReturn {
 
   const addDialog = function (data: DialogData) {
     dialogIndex.value = DialogsStore.value.length
-    DialogsStore.value.push(data)
+    DialogsStore.value.push(markRaw(data))
   }
 
   const removeDialog = function (){
