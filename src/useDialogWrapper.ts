@@ -32,9 +32,9 @@ export const useDialogWrapper = function (): UseDialogWrapperReturn {
 
   const getLatestId = () => {
     if(DialogsStore.length > 0) {
-      const indexes = DialogsStore.map(dialog => dialog.id)
+      const IDs = DialogsStore.map(dialog => dialog.id)
       
-      return Math.max(...indexes)
+      return Math.max(...IDs)
     }
     return 0
   }
