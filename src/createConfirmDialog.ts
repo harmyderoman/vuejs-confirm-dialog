@@ -11,7 +11,7 @@ export type PropsData = {
 }
 export interface CreateConfirmDialogFnReturn {
   reveal: (
-    data: PropsData
+    data?: PropsData
   ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
 
   isRevealed: ComputedRef<boolean>
@@ -27,7 +27,7 @@ export const createConfirmDialog = function (
 ): CreateConfirmDialogFnReturn {
   const propsRef: Ref<PropsData> = ref(props)
 
-  const { addDialog, removeDialog } = useDialogWrapper()
+  const { addDialog, removeDialog, getLatestId} = useDialogWrapper()
   const { 
     reveal,
     isRevealed, 
@@ -38,6 +38,8 @@ export const createConfirmDialog = function (
     cancel 
   } = useConfirmDialog()
 
+  const DIALOG_ID = getLatestId() + 1
+
   onReveal((data: PropsData) => {
 
     for (const prop in data) {
@@ -45,6 +47,7 @@ export const createConfirmDialog = function (
     }
 
     addDialog({
+      id: DIALOG_ID,
       dialog,
       isRevealed,
       confirm,
@@ -55,12 +58,11 @@ export const createConfirmDialog = function (
   })
 
   watch( isRevealed,
-    () => {
-    if(!isRevealed.value) {
-      removeDialog()
+    (value) => {
+    if(!value) {
+      removeDialog(DIALOG_ID)
     }
   })
-
 
   return {
     reveal,

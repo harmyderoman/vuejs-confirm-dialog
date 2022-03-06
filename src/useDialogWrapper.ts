@@ -1,13 +1,15 @@
-import { Component, markRaw, Ref, ref, shallowRef } from 'vue-demi'
+import { Component, markRaw, Ref, reactive } from 'vue-demi'
 import { PropsData } from './index'
 
 export interface UseDialogWrapperReturn {
-  DialogsStore: Ref<DialogData[]>
+  DialogsStore: DialogData[]
   addDialog: (data: DialogData) => void,
-  removeDialog: () => void
+  removeDialog: (id: number) => void
+  getLatestId: () => number
 }
 
 export interface DialogData {
+  id: number
   dialog: Component
   isRevealed: Ref<boolean>
   confirm: (data: PropsData) => void
@@ -15,26 +17,32 @@ export interface DialogData {
   props: PropsData
 }
 
-const DialogsStore: Ref<DialogData[]> = ref([])
+const DialogsStore: DialogData[] = reactive([])
 
 export const useDialogWrapper = function (): UseDialogWrapperReturn {
 
-  const dialogIndex: Ref<number> = ref(-1)
-
   const addDialog = function (data: DialogData) {
-    dialogIndex.value = DialogsStore.value.length
-    DialogsStore.value.push(markRaw(data))
+    DialogsStore.push(markRaw(data))
   }
 
-  const removeDialog = function (){
-    if(dialogIndex.value > -1){
-      DialogsStore.value.splice( dialogIndex.value, 1)
+  const removeDialog = function (id: number){
+    const index = DialogsStore.findIndex(dialog => dialog.id == id)
+      DialogsStore.splice( index, 1)
+  }
+
+  const getLatestId = () => {
+    if(DialogsStore.length > 0) {
+      const indexes = DialogsStore.map(dialog => dialog.id)
+      
+      return Math.max(...indexes)
     }
+    return 0
   }
 
   return {
     DialogsStore,
     addDialog,
-    removeDialog
+    removeDialog,
+    getLatestId
   }
 }
