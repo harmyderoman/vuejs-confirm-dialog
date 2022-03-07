@@ -10,6 +10,10 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * `DialogsWrapper` - the component that contains all
+ * modal dialogs of the app
+ */
 import { useDialogWrapper } from './useDialogWrapper'
 
 const { DialogsStore } = useDialogWrapper()

@@ -1,4 +1,4 @@
-import { ref, Prop, ComputedRef, Ref, Component, watch } from 'vue-demi'
+import { ref, ComputedRef, Ref, Component, watch } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -7,9 +7,9 @@ import {
 } from '@vueuse/core'
 
 export type PropsData = {
-  [key: string]: Prop<unknown, unknown>
+  [key: string]: any
 }
-export interface CreateConfirmDialogFnReturn {
+export type CreateConfirmDialogFnReturn = {
   reveal: (
     data?: PropsData
   ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
@@ -21,13 +21,25 @@ export interface CreateConfirmDialogFnReturn {
   onCancel: EventHookOn
 }
 
+/**
+ * Function that makes simple to create, reuse, 
+ * promisify and build chains of modal dialogs. 
+ * 
+ * @param dialog - a component that used for modal dialog
+ * @param props - new props data for dialog component, optional
+ * @returns `{ reveal, isRevealed, onConfirm, onCancel }` -
+ * `reveal` - shows the component
+ * `isRevealed` - return computed mark if the component is shown
+ * `onConfirm` - hook that gets a callback for user's confirmation
+ * `onCancel` - hook that gets a callback for user's canceling
+ */
 export const createConfirmDialog = function (
   dialog: Component,
   props: PropsData = {}
 ): CreateConfirmDialogFnReturn {
   const propsRef: Ref<PropsData> = ref(props)
 
-  const { addDialog, removeDialog, getLatestId} = useDialogWrapper()
+  const { addDialog, removeDialog, getLatestId } = useDialogWrapper()
   const { 
     reveal,
     isRevealed, 
@@ -40,7 +52,7 @@ export const createConfirmDialog = function (
 
   const DIALOG_ID = getLatestId() + 1
 
-  onReveal((data: PropsData) => {
+  onReveal((data?: PropsData) => {
 
     for (const prop in data) {
       propsRef.value[prop] = data[prop]
