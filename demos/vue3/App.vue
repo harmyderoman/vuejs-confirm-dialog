@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import ModalWindow from './ModalWindow.vue' // your modal component
+import Alert from './components/Alert.vue' // your modal component
+import { useAlertMessage } from './composables/useAlertMessage'
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
 // import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
 import { ref } from 'vue'
@@ -38,6 +40,9 @@ const showDialog = async () => {
   else message.value = 'Canceled dialog #2!'
 }
 
+// Alert Message
+const showAlert = useAlertMessage()
+
 // Reset message after 2000 ms
 debouncedWatch(
   message,
@@ -56,6 +61,7 @@ debouncedWatch(
       <div class="card-actions">
         <button class="btn btn-primary" @click="reveal">Dialog</button>
         <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
+        <button class="btn btn-error" @click="showAlert('Fail!')">Alert!</button>
       </div>
     </div>
   </div>
