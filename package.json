@@ -28,15 +28,17 @@
 	"scripts": {
 		"demo": "vite",
 		"lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-		"build": "vite build && vue-tsc --emitDeclarationOnly"
+		"build": "vite build && vue-tsc --emitDeclarationOnly",
+		"test": "vitest"
 	},
 	"dependencies": {
-		"@vueuse/core": "^7.6.2",
+		"@vueuse/core": "^7.7.1",
 		"vue-demi": "*"
 	},
 	"peerDependencies": {
 		"@vue/composition-api": "^1.0.0",
-		"vue": "^2.0.0 || >=3.0.0"
+		"vue": "^2.0.0 || >=3.0.0",
+		"vue-template-compiler": "^2.2.0"
 	},
 	"peerDependenciesMeta": {
 		"@vue/composition-api": {
@@ -44,23 +46,25 @@
 		}
 	},
 	"devDependencies": {
-		"@types/node": "^17.0.18",
+		"@types/node": "^17.0.21",
 		"@typescript-eslint/eslint-plugin": "^4.33.0",
 		"@typescript-eslint/parser": "^4.33.0",
 		"@vitejs/plugin-vue": "^1.10.2",
 		"@vue/compiler-sfc": "^3.2.31",
 		"@vue/eslint-config-prettier": "^6.0.0",
 		"@vue/eslint-config-typescript": "^7.0.0",
-		"eslint": "^8.9.0",
+		"eslint": "^8.10.0",
 		"eslint-plugin-prettier": "^3.4.1",
-		"eslint-plugin-vue": "^8.4.1",
+		"eslint-plugin-vue": "^8.5.0",
+		"happy-dom": "^2.46.3",
 		"prettier": "^2.5.1",
-		"sass": "^1.49.8",
-		"typescript": "^4.5.5",
-		"vite": "^2.8.4",
+		"sass": "^1.49.9",
+		"typescript": "^4.6.2",
+		"vite": "^2.8.6",
 		"vite-plugin-vue2": "1.9.0",
 		"vitest": "^0.6.0",
 		"vue": "^3.2.31",
+		"vue-template-compiler": "^2.2.0",
 		"vue-tsc": "^0.31.4"
 	}
 }
