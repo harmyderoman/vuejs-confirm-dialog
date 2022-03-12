@@ -113,9 +113,9 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [ ] Improve docs( reuse, passing props ...)
 
-*   [ ] Change testing tools to Vitest
+*   [x] Change testing tools to Vitest
 
-*   [ ] Improove tests
+*   [x] Improove tests
 
 
 ## Thanks

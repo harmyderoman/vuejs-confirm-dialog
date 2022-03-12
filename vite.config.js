@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+/// <reference types="vitest/globals" />
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { defineConfig } from 'vite'
@@ -41,4 +43,7 @@ export default defineConfig({
       include: [/vue-demi/, /node_modules/]
     }
   },
+  test: {
+    environment: 'happy-dom'
+  }
 })
