@@ -3,7 +3,7 @@ import { useDialogWrapper } from './../../src/useDialogWrapper'
 import { useSetup } from '../utils'
 import { Component } from 'vue-demi'
 import { useConfirmDialog } from '@vueuse/core'
-import { describe, it, expect, vi, spies } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 const ModalDialog: Component = {
   props: {
@@ -64,7 +64,7 @@ describe('createConfirmDialog', () => {
   it('should call `onConfirm` and `onCancel` hooks', () => {
     const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalDialog)
 
-    let isCalled = false 
+    let isCalled = false
     onConfirm(() => {
       isCalled = true
     })
@@ -78,7 +78,7 @@ describe('createConfirmDialog', () => {
 
     expect(isCalled).toBe(true)
 
-    isCalled = false   
+    isCalled = false
     DialogsStore[0].cancel()
     expect(isCalled).toBe(true)
 
@@ -86,7 +86,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should pass props to component by the second argument', () => {
-    const { reveal } = createConfirmDialog(ModalDialog, { message: 'message'})
+    const { reveal } = createConfirmDialog(ModalDialog, { message: 'message' })
     reveal()
     const { DialogsStore } = useDialogWrapper()
 
@@ -97,7 +97,7 @@ describe('createConfirmDialog', () => {
 
   it('should pass props to component by `reveal()` argument', () => {
     const { reveal } = createConfirmDialog(ModalDialog)
-    reveal({ message: 'message'})
+    reveal({ message: 'message' })
     const { DialogsStore } = useDialogWrapper()
 
     expect(DialogsStore[0].props.message).toBe('message')
