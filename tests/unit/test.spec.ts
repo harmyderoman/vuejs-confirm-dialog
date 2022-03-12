@@ -95,7 +95,7 @@ describe('createConfirmDialog', () => {
     clearDialogsStore()
   })
 
-  it('should pass props to component by `reveal()`', () => {
+  it('should pass props to component by `reveal()` argument', () => {
     const { reveal } = createConfirmDialog(ModalDialog)
     reveal({ message: 'message'})
     const { DialogsStore } = useDialogWrapper()

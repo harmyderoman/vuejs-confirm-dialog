@@ -115,7 +115,7 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] Change testing tools to Vitest
 
-*   [ ] Improove tests
+*   [x] Improove tests
 
 
 ## Thanks
