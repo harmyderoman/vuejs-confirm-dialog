@@ -8,6 +8,7 @@ specifiers:
   '@vue/compiler-sfc': ^3.2.31
   '@vue/eslint-config-prettier': ^6.0.0
   '@vue/eslint-config-typescript': ^7.0.0
+  '@vue/test-utils': ^2.0.0-rc.17
   '@vueuse/core': ^7.7.1
   eslint: ^8.10.0
   eslint-plugin-prettier: ^3.4.1
@@ -36,6 +37,7 @@ devDependencies:
   '@vue/compiler-sfc': 3.2.31
   '@vue/eslint-config-prettier': 6.0.0_7da6b6f215ca8bcd695300faddc3b449
   '@vue/eslint-config-typescript': 7.0.0_22a038ca5d742e5c6adefb63e0f9e040
+  '@vue/test-utils': 2.0.0-rc.17_vue@3.2.31
   eslint: 8.10.0
   eslint-plugin-prettier: 3.4.1_eslint@8.10.0+prettier@2.5.1
   eslint-plugin-vue: 8.5.0_eslint@8.10.0
@@ -918,6 +920,14 @@ packages:
 
   /@vue/shared/3.2.31:
     resolution: {integrity: sha512-ymN2pj6zEjiKJZbrf98UM2pfDd6F2H7ksKw7NDt/ZZ1fh5Ei39X5tABugtT03ZRlWd9imccoK0hE8hpjpU7irQ==}
+    dev: true
+
+  /@vue/test-utils/2.0.0-rc.17_vue@3.2.31:
+    resolution: {integrity: sha512-7LHZKsFRV/HqDoMVY+cJamFzgHgsrmQFalROHC5FMWrzPzd+utG5e11krj1tVsnxYufGA2ABShX4nlcHXED+zQ==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      vue: 3.2.31
     dev: true
 
   /@vueuse/core/7.7.1_vue@3.2.31:

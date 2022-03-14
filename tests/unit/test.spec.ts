@@ -4,8 +4,11 @@ import { useSetup } from '../utils'
 import { Component, nextTick } from 'vue'
 import { useConfirmDialog } from '@vueuse/core'
 import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import DialogComponent from './DialogComponent.vue'
 
 const ModalDialog: Component = {
+  name: 'ModalDialog',
   props: {
     message: String
   },
@@ -146,6 +149,29 @@ describe('DialogsWrapper.vue', () => {
 
     clearDialogsStore()
   })
+
+  it('should mount component to the document', async () => {
+    const wrapper = mount(DialogsWrapper)
+
+    const { addDialog } = useDialogWrapper()
+    const { isRevealed, confirm, cancel } = useConfirmDialog()
+    addDialog({
+      dialog: DialogComponent,
+      isRevealed,
+      confirm,
+      cancel,
+      props: {},
+      id: 0
+    })
+
+    await nextTick()
+
+    const modal = wrapper.findComponent(DialogComponent)
+    expect(modal.exists()).toBe(true)
+
+    clearDialogsStore()
+  })
+
 })
 
 describe('useDialogWrapper', () => {
@@ -153,9 +179,8 @@ describe('useDialogWrapper', () => {
     expect(useDialogWrapper).toBeDefined()
   })
 
-  it.todo('should mount component to the document')
 
-  it('should add Vue component to the DialogsStore', () => {
+  it('should add Vue component to the DialogsStore', async () => {
     const simpleComponent = {} as Component
     const props = {} as PropsData
 
@@ -170,8 +195,6 @@ describe('useDialogWrapper', () => {
         props,
         id: 0
       })
-
-      confirm()
 
       return { DialogsStore }
     })
