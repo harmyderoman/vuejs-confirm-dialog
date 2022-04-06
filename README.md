@@ -118,9 +118,7 @@ const confirmDelete = async () => {
 
   console.log(`You ${ isCanceled ? 'canceled' : 'confirmed' } deleting data.`)
 }
-
 </script>
-
 ```
 
 ## Passing data to/from the dialog
@@ -129,6 +127,39 @@ It will be not so useful if we will not have an option to pass data to and from 
 There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be initial props that the dialog component will receive.
 
 You can change props values during calling `reveal` function by passing to it object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
+
+And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use async/await syntax if you prefer to.
+
+The full example, that displays passing data, reusing, and modal chains:
+
+```html
+<script setup>
+import LoginDialog from 'path/to/LoginDialog.vue'
+import InfoModal from 'path/to/InfoModal.vue'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
+import { ref } from 'vue'
+
+const loginDialog = createConfirmDialog(LoginDialog)
+const infoDialog = createConfirmDialog(InfoModal, { title: 'Some Title' })
+
+const user = ref(null)
+
+const login = async () => {
+  const result = await infoDialog.reveal({ title: 'Please log in to the system' })
+
+  if(!result.isCanceled) {
+    const { data, isCanceled } = await loginDialog.reveal()
+    if(!isCanceled) {
+      user.value = data
+
+      infoDialog.reveal({ title: 'You have successfully logged in.' })
+    } else {
+      infoDialog.reveal({ title: 'You were unable to log in and will not be able to access your data.' })
+    }
+  }
+}
+</script>
+```
 
 For more info check this full Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3).
 
@@ -150,11 +181,13 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] TSDoc
 
-*   [ ] Improve docs( reuse, passing props ...)
-
 *   [x] Change testing tools to Vitest
 
 *   [x] Improove tests
+
+*   [x] Improve docs( reuse, passing props ...)
+
+*   [ ] More examples
 
 ## Thanks
 
