@@ -192,3 +192,5 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 ## Thanks
 
 Inspired by [`Vueuse`](https://github.com/vueuse/vueuse) and [`vue-modal-dialogs`](https://github.com/hjkcai/vue-modal-dialogs). Thanks to all creators of these projects ❤️!
+
+Keep calm and support 🇺🇦!
