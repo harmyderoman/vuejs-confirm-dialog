@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import ModalWindow from './ModalWindow.vue' // your modal component
-import Alert from './components/Alert.vue' // your modal component
+import ModalWindow from './components/SimpleModal.vue' // your modal component
+import Alert from './components/Alert' // your modal component
 import { useAlertMessage } from './composables/useAlertMessage'
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
 // import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
@@ -61,7 +61,7 @@ debouncedWatch(
       <div class="card-actions">
         <button class="btn btn-primary" @click="reveal">Dialog</button>
         <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
-        <button class="btn btn-error" @click="showAlert('Fail!')">Alert!</button>
+        <button class="btn btn-error" @click="showAlert('Yes!')">Alert!</button>
       </div>
     </div>
   </div>
