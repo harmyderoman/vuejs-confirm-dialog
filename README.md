@@ -42,7 +42,7 @@ createApp(App).use(ConfirmDialog).mount('#app')
 Add `DialodsWrapper` to `App.vue` template:
 
 ```html
-// App.vue
+<!-- App.vue -->
 <template>
   <div class="app">
   </div>
@@ -60,7 +60,7 @@ And that's it. Now you can use it.
 Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must contain~~ ~~prop `show`~~. ~~Put `v-if="show"` in its template for conditional rendering~~(no longer need to).
 
 ```html
-<!-- ModalWindow.vue -->
+<!-- ModalDialog.vue -->
 <script setup>
   const emit = defineEmits(['confirm', 'cancel'])
 </script>
@@ -68,8 +68,8 @@ Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must
 <template>
   <div>
     <!-- The modal component body -->
-    <button @click="emit('confirm', true)">Confirm</button><br />
-    <button @click="emit('cancel', false)">Cancel</button>
+    <button @click="emit('confirm')">Confirm</button>
+    <button @click="emit('cancel')">Cancel</button>
   </div>
 </template>
 ```
@@ -77,17 +77,88 @@ Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must
 Use this modal window wherever you want in your project:
 
 ```html
+<!-- App.vue -->
 <script setup>
-import ModalWindow from 'path/to/ModalWindow.vue'
+import ModalDialog from './ModalDialog.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 
-const { reveal, onConfirm } = createConfirmDialog(ModalWindow)
+const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalDialog)
 
 reveal()
 
 onConfirm(() => {
   console.log('Confirmed!')
 })
+onCancel(() => {
+  console.log('Canceled!')
+})
+</script>
+```
+
+### Two way of usage
+
+The library lets you decide how to use it. The first way is to use hooks:
+`onConfirm` - hook gets a callback that runs after the user confirmed the modal message
+`onCancel` - run callback if the user decides to click cancel
+
+The second way is promisify modal dialog. `reveal` function returns a Promise, that resolves data and `isCanceled` boolean from the dialog after the user commits the action.
+
+for example(not real):
+
+```html
+<script setup>
+import ModalDialog from './ModalDialog.vue'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
+
+const dialog = createConfirmDialog(ModalDialog)
+
+const confirmDelete = async () => {
+  const { data, isCanceled } = await dialog.reveal()
+
+  if(!isCanceled) deleteYourData(data)
+
+  console.log(`You ${ isCanceled ? 'canceled' : 'confirmed' } deleting data.`)
+}
+</script>
+```
+
+## Passing data to/from the dialog
+
+It will be not so useful if we will not have an option to pass data to and from а component.
+There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be initial props that the dialog component will receive.
+
+You can change props values during calling `reveal` function by passing to it object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
+
+And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use async/await syntax if you prefer to.
+
+The full example, that displays passing data, reusing, and modal chains:
+
+```html
+<script setup>
+import LoginDialog from './LoginDialog.vue'
+import InfoModal from './InfoModal.vue'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
+import { ref } from 'vue'
+
+const loginDialog = createConfirmDialog(LoginDialog)
+const infoModal = createConfirmDialog(InfoModal, { title: 'Some Title' })
+
+const user = ref(null)
+
+const login = async () => {
+  const result = await infoModal.reveal({ title: 'Please log in to the system' })
+
+  if(!result.isCanceled) {
+    const { data, isCanceled } = await loginDialog.reveal()
+    if(!isCanceled) {
+      user.value = data
+
+      infoModal.reveal({ title: 'You have successfully logged in.' })
+    } else {
+      infoModal.reveal({ title: 'You were unable to log in and will not be able to access your data.' })
+    }
+  }
+}
 </script>
 ```
 
@@ -95,7 +166,7 @@ For more info check this full Vue 3 [example](https://github.com/harmyderoman/vu
 
 ## Demo
 
-Clone the project and run the following command to see the demo:
+Clone the project, install dependencies and run the following command to see the demo:
 
 ```bash
 pnpm run demo
@@ -109,15 +180,18 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] Make it work without `show` prop
 
-*   [ ] TSDoc
-
-*   [ ] Improve docs( reuse, passing props ...)
+*   [x] TSDoc
 
 *   [x] Change testing tools to Vitest
 
 *   [x] Improove tests
 
+*   [x] Improve docs( reuse, passing props ...)
+
+*   [ ] More examples
 
 ## Thanks
 
 Inspired by [`Vueuse`](https://github.com/vueuse/vueuse) and [`vue-modal-dialogs`](https://github.com/hjkcai/vue-modal-dialogs). Thanks to all creators of these projects ❤️!
+
+Keep calm and support 🇺🇦!
