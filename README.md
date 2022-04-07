@@ -60,7 +60,7 @@ And that's it. Now you can use it.
 Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must contain~~ ~~prop `show`~~. ~~Put `v-if="show"` in its template for conditional rendering~~(no longer need to).
 
 ```html
-<!-- ModalWindow.vue -->
+<!-- ModalDialog.vue -->
 <script setup>
   const emit = defineEmits(['confirm', 'cancel'])
 </script>
@@ -68,8 +68,8 @@ Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must
 <template>
   <div>
     <!-- The modal component body -->
-    <button @click="emit('confirm', true)">Confirm</button><br />
-    <button @click="emit('cancel', false)">Cancel</button>
+    <button @click="emit('confirm')">Confirm</button>
+    <button @click="emit('cancel')">Cancel</button>
   </div>
 </template>
 ```
@@ -77,11 +77,12 @@ Build Modal Window. It must contain emits `confirm` and `cancel`. ~~It also must
 Use this modal window wherever you want in your project:
 
 ```html
+<!-- App.vue -->
 <script setup>
-import ModalWindow from 'path/to/ModalWindow.vue'
+import ModalDialog from './ModalDialog.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 
-const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalWindow)
+const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalDialog)
 
 reveal()
 
@@ -106,7 +107,7 @@ for example(not real):
 
 ```html
 <script setup>
-import ModalDialog from 'path/to/ModalDialog.vue'
+import ModalDialog from './ModalDialog.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 
 const dialog = createConfirmDialog(ModalDialog)
@@ -134,27 +135,27 @@ The full example, that displays passing data, reusing, and modal chains:
 
 ```html
 <script setup>
-import LoginDialog from 'path/to/LoginDialog.vue'
-import InfoModal from 'path/to/InfoModal.vue'
+import LoginDialog from './LoginDialog.vue'
+import InfoModal from './InfoModal.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
 import { ref } from 'vue'
 
 const loginDialog = createConfirmDialog(LoginDialog)
-const infoDialog = createConfirmDialog(InfoModal, { title: 'Some Title' })
+const infoModal = createConfirmDialog(InfoModal, { title: 'Some Title' })
 
 const user = ref(null)
 
 const login = async () => {
-  const result = await infoDialog.reveal({ title: 'Please log in to the system' })
+  const result = await infoModal.reveal({ title: 'Please log in to the system' })
 
   if(!result.isCanceled) {
     const { data, isCanceled } = await loginDialog.reveal()
     if(!isCanceled) {
       user.value = data
 
-      infoDialog.reveal({ title: 'You have successfully logged in.' })
+      infoModal.reveal({ title: 'You have successfully logged in.' })
     } else {
-      infoDialog.reveal({ title: 'You were unable to log in and will not be able to access your data.' })
+      infoModal.reveal({ title: 'You were unable to log in and will not be able to access your data.' })
     }
   }
 }
