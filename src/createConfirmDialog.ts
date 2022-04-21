@@ -9,17 +9,6 @@ import {
 export type PropsData = {
   [key: string]: any
 }
-export type CreateConfirmDialogFnReturn = {
-  reveal: (
-    data?: PropsData
-  ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
-
-  isRevealed: ComputedRef<boolean>
-
-  onConfirm: EventHookOn
-
-  onCancel: EventHookOn
-}
 
 /**
  * Function that makes simple to create, reuse, 
@@ -36,7 +25,17 @@ export type CreateConfirmDialogFnReturn = {
 export const createConfirmDialog = function (
   dialog: Component,
   props: PropsData = {}
-): CreateConfirmDialogFnReturn {
+): {
+  reveal: (
+    data?: PropsData
+  ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
+
+  isRevealed: ComputedRef<boolean>
+
+  onConfirm: EventHookOn
+
+  onCancel: EventHookOn
+} {
   const propsRef: Ref<PropsData> = ref(props)
 
   const { addDialog, removeDialog, getLatestId } = useDialogWrapper()
