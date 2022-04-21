@@ -9,12 +9,22 @@
   ></component>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import { useDialogWrapper } from './useDialogWrapper'
+import { defineComponent } from 'vue-demi'
+
 /**
  * `DialogsWrapper` - the component that contains all
  * modal dialogs of the app
  */
-import { useDialogWrapper } from './useDialogWrapper'
+export default defineComponent({
+  name: 'DialogsWrapper',
+  setup() {
+    const { DialogsStore } = useDialogWrapper()
 
-const { DialogsStore } = useDialogWrapper()
+    return {
+      DialogsStore
+    }
+  }
+})
 </script>
