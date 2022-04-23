@@ -34,8 +34,7 @@ const emit = defineEmits(['confirm', 'cancel']) // must emits
   right: 0;
   bottom: 0;
   left: 0;
-  --tw-bg-opacity: 0.4;
-  background-color: hsla(var(--nf) / var(--tw-bg-opacity, 1));
+  background-color: hsla(var(--nf) / var(0.4, 1));
   transition-property: background-color, border-color, color, fill, stroke,
     opacity, box-shadow, transform;
   transition-duration: 0.15s;
