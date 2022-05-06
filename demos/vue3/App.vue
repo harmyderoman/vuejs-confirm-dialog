@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import ModalWindow from './components/SimpleModal.vue' // your modal component
-import Alert from './components/Alert' // your modal component
 import { useAlertMessage } from './composables/useAlertMessage'
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
 // import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
