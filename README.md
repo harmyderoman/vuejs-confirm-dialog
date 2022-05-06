@@ -169,7 +169,6 @@ If you prefer you can use it with Options API inside methods.
 ```javascript
 import Dialog from './Dialog.vue'
 import { createConfirmDialog } from 'vuejs-confirm-dialog'
-import { ref } from 'vue'
 
 export default {
   data(){
