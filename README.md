@@ -162,6 +162,35 @@ const login = async () => {
 </script>
 ```
 
+## Using with Options API
+
+If you prefer you can use it with Options API inside methods.
+
+```javascript
+import Dialog from './Dialog.vue'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
+import { ref } from 'vue'
+
+export default {
+  data(){
+    return {
+      isConfirmed: false
+    }
+  },
+  methods: {
+    showDialog(){
+      const dialog = createConfirmDialog(Dialog)
+
+      dialog.onConfirm(() => {
+        this.isConfirmed = true
+      })
+
+      dialog.reveal()
+    }
+  }
+}
+```
+
 For more info check this full Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3).
 
 ## Demo

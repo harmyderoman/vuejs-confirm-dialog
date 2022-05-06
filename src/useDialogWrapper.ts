@@ -5,7 +5,6 @@ export type UseDialogWrapperReturn = {
   DialogsStore: DialogData[]
   addDialog: (dialogData: DialogData) => void,
   removeDialog: (id: number) => void
-  getLatestId: () => number
 }
 
 export type DialogData = {
@@ -30,19 +29,9 @@ export const useDialogWrapper = function (): UseDialogWrapperReturn {
       DialogsStore.splice( index, 1)
   }
 
-  const getLatestId = () => {
-    if(DialogsStore.length > 0) {
-      const IDs = DialogsStore.map(dialog => dialog.id)
-      
-      return Math.max(...IDs)
-    }
-    return 0
-  }
-
   return {
     DialogsStore,
     addDialog,
-    removeDialog,
-    getLatestId
+    removeDialog
   }
 }
