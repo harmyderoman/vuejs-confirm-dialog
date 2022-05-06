@@ -38,7 +38,7 @@ export const createConfirmDialog = function (
 } {
   const propsRef: Ref<PropsData> = ref(props)
 
-  const { addDialog, removeDialog, getLatestId } = useDialogWrapper()
+  const { addDialog, removeDialog } = useDialogWrapper()
   const { 
     reveal,
     isRevealed, 
@@ -49,7 +49,7 @@ export const createConfirmDialog = function (
     cancel 
   } = useConfirmDialog()
 
-  const DIALOG_ID = getLatestId() + 1
+  const DIALOG_ID = Math.floor(Math.random() * 1000000000)
 
   onReveal((data?: PropsData) => {
 
