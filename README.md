@@ -95,13 +95,13 @@ onCancel(() => {
 </script>
 ```
 
-### Two way of usage
+### Two ways of usage
 
 The library lets you decide how to use it. The first way is to use hooks:
 `onConfirm` - hook gets a callback that runs after the user confirmed the modal message
 `onCancel` - run callback if the user decides to click cancel
 
-The second way is promisify modal dialog. `reveal` function returns a Promise, that resolves data and `isCanceled` boolean from the dialog after the user commits the action.
+The second way is promisify modal dialog. `reveal` the function returns a Promise, that resolves data and `isCanceled` boolean from the dialog after the user commits the action.
 
 for example(not real):
 
@@ -127,7 +127,7 @@ const confirmDelete = async () => {
 It will be not so useful if we will not have an option to pass data to and from а component.
 There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be initial props that the dialog component will receive.
 
-You can change props values during calling `reveal` function by passing to it object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
+You can change props values during calling `reveal` function by passing to its object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
 
 And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use async/await syntax if you prefer to.
 
@@ -162,7 +162,7 @@ const login = async () => {
 </script>
 ```
 
-## Using with Options API
+## Using inside Options API
 
 If you prefer you can use it with Options API inside methods.
 
@@ -212,7 +212,7 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] Change testing tools to Vitest
 
-*   [x] Improove tests
+*   [x] Improve tests
 
 *   [x] Improve docs( reuse, passing props ...)
 
