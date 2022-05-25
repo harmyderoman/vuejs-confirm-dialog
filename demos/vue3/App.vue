@@ -1,10 +1,14 @@
 <script lang="ts" setup>
 import ModalWindow from './components/SimpleModal.vue' // your modal component
 import { useAlertMessage } from './composables/useAlertMessage'
+import Loader from './components/Loader.vue'
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
 // import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
 import { ref } from 'vue'
 import { debouncedWatch } from '@vueuse/core'
+
+import { useLoader } from './composables/useLoader'
+
 
 const defaultMessage = 'To prompt Modal Dialog press one of the buttons below:'
 const message = ref(defaultMessage)
@@ -21,7 +25,7 @@ onCancel(() => {
 
 // For reusing component just call `reveal` again and pass to it object of props.
 const reuse = () => {
-  reveal({msg: 'Reuse Modal Component'})
+  reveal({ msg: 'Reuse Modal Component' })
 }
 
 // Example how to use it in Promise style
@@ -50,6 +54,22 @@ debouncedWatch(
   },
   { debounce: 2000 }
 )
+
+// Loader Component
+const fetchData = () => {
+  // Here go your API Call, I tested it with promise
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve('Loading data is finished!')
+    }, 2000)
+  })
+}
+
+const loader = useLoader(fetchData)
+
+loader.onLoaded((data) => {
+  message.value = data
+})
 </script>
 
 <template>
@@ -61,6 +81,7 @@ debouncedWatch(
         <button class="btn btn-primary" @click="reveal">Dialog</button>
         <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
         <button class="btn btn-error" @click="showAlert('Yes!')">Alert!</button>
+        <button class="btn btn-secondary" @click="loader.start">Load Data</button>
       </div>
     </div>
   </div>
