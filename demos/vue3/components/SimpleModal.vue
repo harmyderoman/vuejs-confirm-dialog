@@ -34,11 +34,12 @@ const emit = defineEmits(['confirm', 'cancel']) // must emits
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: hsla(var(--nf) / var(0.4, 1));
+  background-color: #cecece89;
   transition-property: background-color, border-color, color, fill, stroke,
     opacity, box-shadow, transform;
   transition-duration: 0.15s;
   transition-duration: 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
 }
 </style>
