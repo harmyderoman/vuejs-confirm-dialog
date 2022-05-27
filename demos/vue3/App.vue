@@ -87,10 +87,22 @@ loader.onLoaded((data) => {
   </div>
 
   <!-- put it in the template of your App.vue file to make this library work -->
-  <DialogsWrapper />
+  <div class="alerts-container">
+    <DialogsWrapper />
+  </div>
 </template>
 
 <style>
 @import 'https://cdn.jsdelivr.net/npm/daisyui@1.19.0/dist/full.css';
 @import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css';
+
+.alerts-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    top: 20px;
+    right: 40px;
+    width: 380px;
+}
 </style>
