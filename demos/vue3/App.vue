@@ -4,11 +4,12 @@ import { useAlertMessage } from './composables/useAlertMessage'
 import Loader from './components/Loader.vue'
 import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
 // import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
+import EditableTable from './EditableTable.vue'
+
 import { ref } from 'vue'
 import { debouncedWatch } from '@vueuse/core'
 
 import { useLoader } from './composables/useLoader'
-
 
 const defaultMessage = 'To prompt Modal Dialog press one of the buttons below:'
 const message = ref(defaultMessage)
@@ -73,15 +74,29 @@ loader.onLoaded((data) => {
 </script>
 
 <template>
-  <div class="card shadow-xl">
-    <div class="justify-end card-body">
-      <h1 class="card-title">Hi!</h1>
-      <p class="text-error">{{ message }}</p>
-      <div class="card-actions">
-        <button class="btn btn-primary" @click="reveal">Dialog</button>
-        <button class="btn btn-secondary" @click="showDialog">Dialog 2</button>
-        <button class="btn btn-error" @click="showAlert('Yes!')">Alert!</button>
-        <button class="btn btn-secondary" @click="loader.start">Load Data</button>
+  <div class="main-container">
+    <div class="card shadow-xl">
+      <div class="justify-end card-body">
+        <h1 class="card-title">Hi!</h1>
+        <p class="text-error">{{ message }}</p>
+        <div class="card-actions">
+          <button class="btn btn-primary" @click="reveal">Dialog</button>
+          <button class="btn btn-secondary" @click="showDialog">
+            Dialog 2
+          </button>
+          <button class="btn btn-error" @click="showAlert('Yes!')">
+            Alert!
+          </button>
+          <button class="btn btn-secondary" @click="loader.start">
+            Load Data
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-xl">
+      <div class="justify-end card-body">
+        <EditableTable />
       </div>
     </div>
   </div>
@@ -97,12 +112,18 @@ loader.onLoaded((data) => {
 @import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css';
 
 .alerts-container {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    top: 20px;
-    right: 40px;
-    width: 380px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  top: 20px;
+  right: 40px;
+  width: 380px;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px 15px;
 }
 </style>
