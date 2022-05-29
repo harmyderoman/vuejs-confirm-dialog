@@ -4,8 +4,6 @@ import PopupEdit from './components/PopupEdit.vue'
 import { createConfirmDialog } from './../../src/createConfirmDialog'
 
 const editValue = (val, rowId, key, event) => {
-  console.log("event:")
-  console.log(event)
   const popup = createConfirmDialog(PopupEdit)
   popup.reveal({ value: val, event: event })
 
