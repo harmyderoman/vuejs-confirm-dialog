@@ -4,7 +4,8 @@ import { PropsData } from './index'
 export type UseDialogWrapperReturn = {
   DialogsStore: DialogData[]
   addDialog: (dialogData: DialogData) => void,
-  removeDialog: (id: number) => void
+  removeDialog: (id: number) => void,
+  removeAll: () => void
 }
 
 export type DialogData = {
@@ -29,9 +30,14 @@ export const useDialogWrapper = function (): UseDialogWrapperReturn {
       DialogsStore.splice( index, 1)
   }
 
+  const removeAll = function () {
+    DialogsStore.splice(0)
+  }
+
   return {
     DialogsStore,
     addDialog,
-    removeDialog
+    removeDialog,
+    removeAll
   }
 }

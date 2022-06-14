@@ -16,7 +16,8 @@ const message = ref(defaultMessage)
 
 // Example how to use `createConfirmDialog` with hooks
 // pass your modal component to the function
-const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalWindow)
+const { reveal, onConfirm, onCancel, close, isRevealed, closeAll } =
+  createConfirmDialog(ModalWindow)
 onConfirm(() => {
   message.value = 'Confirmed!'
 })
@@ -56,6 +57,17 @@ debouncedWatch(
   { debounce: 2000 }
 )
 
+// It doesn't work second time!!!
+debouncedWatch(
+  isRevealed,
+  () => {
+    message.value = 'watch'
+    close()
+    message.value = 'No hook triggered!'
+  },
+  { debounce: 2000 }
+)
+
 // Loader Component
 const fetchData = () => {
   // Here go your API Call, I tested it with promise
@@ -89,6 +101,9 @@ loader.onLoaded((data) => {
           </button>
           <button class="btn btn-secondary" @click="loader.start">
             Load Data
+          </button>
+          <button class="btn btn-error" @click="closeAll">
+            Close All Dialogs
           </button>
         </div>
       </div>
