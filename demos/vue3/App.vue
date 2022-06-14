@@ -61,7 +61,6 @@ debouncedWatch(
 debouncedWatch(
   isRevealed,
   () => {
-    message.value = 'watch'
     close()
     message.value = 'No hook triggered!'
   },
