@@ -11,7 +11,7 @@ const emit = defineEmits(['confirm', 'cancel']) // must emits
 </script>
 
 <template>
-  <div class="my-modal">
+  <div class="my-modal"  @click.self="emit('cancel')">
     <div class="modal-box">
       <p>{{ msg }}</p>
       <div class="modal-action">

@@ -1,16 +1,16 @@
 # vuejs-confirm-dialog
 
-This library just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js.
+This package just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js. Actually, it adds just one function `createConfirmDialog` that does all the hard work for you.
 
 Made with Composition API.
 
-Powered by `vue-demi`, so you can use it in Vue 2, but this required `@vue/composition-api` >= v1.1
+Powered by `vue-demi`, so you can use it in Vue 2, but this requires `@vue/composition-api` >= v1.1
 
 > ⚠️  Warning! Work in progress. Don't use it in production! Breaking changes may occur!
 
 ## About
 
-This is a library for creating reusable dialogs. It takes your modal component and builds a structure for dialogs that wait for user confirmation. You can work with it like with promises or work with dialog hooks that the library generates for you.
+This is a package for creating reusable dialogs. It takes your modal component and builds a structure for dialogs that wait for user confirmation. You can work with it like with promises or work with dialog hooks that the package generates for you.
 
 ## Installation
 
@@ -47,7 +47,7 @@ Add `DialodsWrapper` to `App.vue` template:
   <div class="app">
   </div>
 
-  <!-- put it in the template of your App.vue file to make this library work -->
+  <!-- put it in the template of your App.vue file to make dialogs work -->
   <!-- Don't need import the component, if you installed the plugin -->
   <DialogsWrapper />
 </template>
@@ -97,7 +97,7 @@ onCancel(() => {
 
 ### Two ways of usage
 
-The library lets you decide how to use it. The first way is to use hooks:
+The package lets you decide how to use it. The first way is to use hooks:
 `onConfirm` - hook gets a callback that runs after the user confirmed the modal message
 `onCancel` - run callback if the user decides to click cancel
 

@@ -16,16 +16,22 @@ export type PropsData = {
  * 
  * @param dialog - a component that used for modal dialog
  * @param props - new props data for dialog component, optional
- * @returns `{ reveal, isRevealed, onConfirm, onCancel }` -
+ * @returns `{ reveal, isRevealed, onConfirm, onCancel, close, closeAll }` -
  * `reveal` - shows the component
  * `isRevealed` - return computed mark if the component is shown
  * `onConfirm` - hook that gets a callback for user's confirmation
  * `onCancel` - hook that gets a callback for user's canceling
+ * `close` - close the dialog without triggering any hook and don't change `isRevealed`
+ * `closeAll` - close all open dialogs
  */
 export const createConfirmDialog = function (
   dialog: Component,
   props: PropsData = {}
 ): {
+  close: () => void
+
+  closeAll: () => void
+
   reveal: (
     data?: PropsData
   ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
@@ -38,7 +44,7 @@ export const createConfirmDialog = function (
 } {
   const propsRef: Ref<PropsData> = ref(props)
 
-  const { addDialog, removeDialog } = useDialogWrapper()
+  const { addDialog, removeDialog, removeAll } = useDialogWrapper()
   const { 
     reveal,
     isRevealed, 
@@ -76,6 +82,12 @@ export const createConfirmDialog = function (
   })
 
   return {
+    close: () => {
+      removeDialog(DIALOG_ID)
+    },
+    closeAll: () =>{
+      removeAll()
+    },
     reveal,
     isRevealed,
     onConfirm,
