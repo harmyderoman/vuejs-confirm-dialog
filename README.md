@@ -35,7 +35,7 @@ createApp(App).use(ConfirmDialog).mount('#app')
 
 ### Step 2
 
-Add `DialodsWrapper` to `App.vue` template:
+Add `DialogsWrapper` to `App.vue` template:
 
 ```html
 <!-- App.vue -->
