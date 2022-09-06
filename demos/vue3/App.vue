@@ -89,7 +89,7 @@ loader.onLoaded((data) => {
     <div class="card shadow-xl">
       <div class="justify-end card-body">
         <h1 class="card-title">Hi!</h1>
-        <p class="text-error">{{ message }}</p>
+        <p class="card-title text-error">{{ message }}</p>
         <div class="card-actions">
           <button class="btn btn-primary" @click="reveal">Dialog</button>
           <button class="btn btn-secondary" @click="showDialog">
