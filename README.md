@@ -1,16 +1,12 @@
 # vuejs-confirm-dialog
 
-This package just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js. Actually, it adds just one function `createConfirmDialog` that does all the hard work for you.
-
-Made with Composition API.
-
-Powered by `vue-demi`, so you can use it in Vue 2, but this requires `@vue/composition-api` >= v1.1
-
-> ⚠️  Warning! Work in progress. Don't use it in production! Breaking changes may occur!
+This package just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js. For now, it provides just one function `createConfirmDialog` that does all the hard work for you.
 
 ## About
 
-This is a package for creating reusable dialogs. It takes your modal component and builds a structure for dialogs that wait for user confirmation. You can work with it like with promises or work with dialog hooks that the package generates for you.
+How does it work? The idea is simple, this function -- `createConfirmDialog` gets a modal component and magically provides to it emits `confirm` and `cancel` and its props values. This function returns to you a dialog instance that controls the rendering of the modal component and reacts to user decisions. It reduces you to write all the boilerplate code over and over again and makes it simple to reuse your modals everywhere in your project.
+
+You can work with dialogs like with promises or with hooks that the dialog instance generates for you.
 
 ## Installation
 
@@ -39,7 +35,7 @@ createApp(App).use(ConfirmDialog).mount('#app')
 
 ### Step 2
 
-Add `DialodsWrapper` to `App.vue` template:
+Add `DialogsWrapper` to `App.vue` template:
 
 ```html
 <!-- App.vue -->
@@ -192,6 +188,27 @@ export default {
 
 For more info check this full Vue 3 [example](https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3).
 
+## Close dialogs programmable
+
+Sometimes you need to close dialogs and don't want to wait for the user's action. For these purposes, dialog instance provides method `close`.
+
+```javascript
+import Alert from './Alert.vue'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
+
+const dialog = createConfirmDialog(Alert)
+
+dialog.reveal()
+
+setTimeout(() => {
+  dialog.close()
+}, 3000)
+```
+
+It also doesn't trigger any hooks.
+
+If you need to close all dialog just call `dialog.closeAll()`.
+
 ## Demo
 
 Clone the project, install dependencies and run the following command to see the demo:
@@ -206,7 +223,7 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] Make it work!
 
-*   [x] Make it work without `show` prop
+*   [x] Make it work without `show` a prop
 
 *   [x] TSDoc
 
@@ -216,7 +233,7 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] Improve docs( reuse, passing props ...)
 
-*   [ ] More examples
+*   [x] More examples
 
 ## Thanks
 

@@ -1,4 +1,4 @@
-import { ref, ComputedRef, Ref, Component, watch } from 'vue-demi'
+import { ref, ComputedRef, Ref, Component, watch, computed } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -43,8 +43,14 @@ export const createConfirmDialog = function (
   onCancel: EventHookOn
 } {
   const propsRef: Ref<PropsData> = ref(props)
+  const revealed = ref(false)
 
-  const { addDialog, removeDialog, removeAll } = useDialogWrapper()
+  const close = () => {
+    revealed.value = false
+    removeDialog(DIALOG_ID)
+  }
+
+  const { addDialog, removeDialog, removeAll, DialogsStore } = useDialogWrapper()
   const { 
     reveal,
     isRevealed, 
@@ -59,6 +65,7 @@ export const createConfirmDialog = function (
 
   onReveal((data?: PropsData) => {
 
+    revealed.value = true
     for (const prop in data) {
       propsRef.value[prop] = data[prop]
     }
@@ -70,6 +77,8 @@ export const createConfirmDialog = function (
       confirm,
       cancel,
       props: propsRef.value,
+      close,
+      revealed
     })
 
   })
@@ -81,15 +90,18 @@ export const createConfirmDialog = function (
     }
   })
 
+  const closeAll = () =>{
+    DialogsStore.forEach(dialog => {
+      dialog.revealed.value = false
+    })
+    removeAll()
+  }
+
   return {
-    close: () => {
-      removeDialog(DIALOG_ID)
-    },
-    closeAll: () =>{
-      removeAll()
-    },
+    close,
+    closeAll,
     reveal,
-    isRevealed,
+    isRevealed: computed(() => isRevealed.value && revealed.value),
     onConfirm,
     onCancel,
   }

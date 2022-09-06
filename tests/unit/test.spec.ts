@@ -111,7 +111,7 @@ describe('createConfirmDialog', () => {
   it('should return promise on reveil', async () => {
     const { reveal } = createConfirmDialog(ModalDialog)
 
-    let isCanceled: boolean
+    let isCanceled: boolean | undefined
     const { DialogsStore } = useDialogWrapper()
 
     reveal().then(result => {
@@ -137,6 +137,59 @@ describe('createConfirmDialog', () => {
     await nextTick()
 
     expect(isCanceled).toBe(true)
+
+    clearDialogsStore()
+  })
+
+  it('should close dialog without triggering any hook', async () => {
+    const dialog = createConfirmDialog(ModalDialog)
+    let onConfirmTriggered = false
+    let onCancelTriggered = false
+
+    dialog.onConfirm(() => {
+      onConfirmTriggered = true
+    })
+
+    dialog.onCancel(() => {
+      onCancelTriggered = true
+    })
+
+    dialog.reveal()
+
+    expect(dialog.isRevealed.value).toBe(true)
+
+    await nextTick()
+
+    dialog.close()
+
+    await nextTick()
+
+    expect(dialog.isRevealed.value).toBe(false)
+    expect(onConfirmTriggered).toBe(false)
+    expect(onCancelTriggered).toBe(false)
+
+    clearDialogsStore()
+  })
+  it('should close all dialogs', async () => {
+    const dialog = createConfirmDialog(ModalDialog)
+    const dialog2 = createConfirmDialog(ModalDialog)
+
+    dialog.reveal()
+    // await nextTick()
+    dialog2.reveal()
+
+    expect(dialog.isRevealed.value).toBe(true)
+    expect(dialog2.isRevealed.value).toBe(true)
+
+    // await nextTick()
+
+    dialog.closeAll()
+
+    // await nextTick()
+
+    expect(dialog.isRevealed.value).toBe(false)
+    // await nextTick()
+    // expect(dialog2.isRevealed.value).toBe(false)
 
     clearDialogsStore()
   })

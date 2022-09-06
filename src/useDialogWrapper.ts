@@ -14,7 +14,9 @@ export type DialogData = {
   isRevealed: Ref<boolean>
   confirm: (data?: PropsData) => void
   cancel: (data?: PropsData) => void
-  props: PropsData
+  props: PropsData,
+  close: () => void,
+  revealed: Ref<boolean>
 }
 
 const DialogsStore: DialogData[] = reactive([])
