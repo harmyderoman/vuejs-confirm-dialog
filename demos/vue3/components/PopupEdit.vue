@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref, PropType} from 'vue'
-import { useFocus } from '@vueuse/core'
 
 const { value, event } = defineProps({
   value: {
@@ -24,7 +23,9 @@ const emit = defineEmits(['confirm', 'cancel'])
 
 <template>
   <div class="my-modal" @click.self="emit('cancel')">
-    <div class="popup-box" :style="{ 'top': event.clientY + 'px', 'left': event.clientX + 'px' }">
+    <div class="popup-box" 
+      :style="{ 'top': event.clientY + 'px', 'left': event.clientX + 'px' }"
+      >
       <div class="popup-action">
         <input
           type="text"

@@ -28,7 +28,7 @@
 <template>
   <h2 class="card-title">Basic Example</h2>
   <p>
-    This is the basic example how to use this package:
+    This is the basic example of how to use this package:
   </p>
 
   <div class="card shadow-xl mt-4 mb-4">

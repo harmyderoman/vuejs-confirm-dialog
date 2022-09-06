@@ -1,6 +1,5 @@
 <script setup lang="ts">
 defineProps({
-  //show: Boolean, // no longer need `show` prop and `v-if` on template
   msg: {
     type: String,
     default: 'The modal dialog message',
@@ -24,7 +23,7 @@ const emit = defineEmits(['confirm', 'cancel']) // must emits
   </div>
 </template>
 
-<style>
+<style> 
 .my-modal {
   display: flex;
   align-items: center;
