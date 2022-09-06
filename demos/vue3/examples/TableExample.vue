@@ -1,0 +1,17 @@
+<script lang="ts" setup>
+  import EditableTable from './../EditableTable.vue'
+  </script>
+  
+  <template>
+    <h2 class="card-title">Edit Table with Popup</h2>
+    <p>
+      Use this package to create and reuse popups:
+    </p>
+  
+    <div class="card shadow-xl mt-4">
+      <div class="justify-end card-body">
+        <EditableTable />
+      </div>
+    </div>
+    <div class="divider"></div>
+  </template>

@@ -5,9 +5,11 @@ import { useFocus } from '@vueuse/core'
 const { value, event } = defineProps({
   value: {
     type: String,
+    required: true
   },
   event: {
-    type: Object as PropType<PointerEvent>
+    type: Object as PropType<PointerEvent>,
+    required: true
   }
 })
 
@@ -22,7 +24,7 @@ const emit = defineEmits(['confirm', 'cancel'])
 
 <template>
   <div class="my-modal" @click.self="emit('cancel')">
-    <div class="popup-box" :style="{ 'top': event.pageY + 'px', 'left': event.pageX + 'px' }">
+    <div class="popup-box" :style="{ 'top': event.clientY + 'px', 'left': event.clientX + 'px' }">
       <div class="popup-action">
         <input
           type="text"
@@ -57,5 +59,9 @@ const emit = defineEmits(['confirm', 'cancel'])
 .popup-action {
     display: flex;
     justify-content: flex-end;
+}
+
+.table th:first-child {
+    z-index: 0;
 }
 </style>

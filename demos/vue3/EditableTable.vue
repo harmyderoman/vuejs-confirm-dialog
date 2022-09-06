@@ -3,7 +3,13 @@ import { ref } from 'vue'
 import PopupEdit from './components/PopupEdit.vue'
 import { createConfirmDialog } from './../../src/createConfirmDialog'
 
-const editValue = (val, rowId, key, event) => {
+const editValue = (
+    val: string | number,
+    rowId: string | number,
+    key: string | number,
+    event: any
+  ) => {
+
   const popup = createConfirmDialog(PopupEdit)
   popup.reveal({ value: val, event: event })
 
@@ -53,6 +59,7 @@ const table = ref([
         <tr v-for="(row, i) in table" :key="i">
           <th
             v-for="(item, key, index) in row"
+            class="editable"
             @click="(event) => editValue(item, i, key, event)"
             :key="index"
           >
@@ -65,7 +72,10 @@ const table = ref([
 </template>
 
 <style>
-th {
+.editable {
   cursor: pointer;
+}
+.table th:first-child {
+  z-index: 0 !important;
 }
 </style>
