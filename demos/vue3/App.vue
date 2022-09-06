@@ -1,119 +1,20 @@
 <script lang="ts" setup>
-import ModalWindow from './components/SimpleModal.vue' // your modal component
-import { useAlertMessage } from './composables/useAlertMessage'
-import Loader from './components/Loader.vue'
-import { createConfirmDialog } from '../../src/index' // `...from 'vuejs-create-dialog'` if you are using the package
-// import DialogsWrapper from '../../src/index' // optional, add this import if you didn't install the plugin
-import EditableTable from './EditableTable.vue'
+import IntroductionPart from './examples/IntroductionPart.vue'
+import BasicExample from './examples/BasicExample.vue'
+import LoaderExample from './examples/LoaderExample.vue'
+import TableExample from './examples/TableExample.vue'
+import AlertExample from './examples/AlertExample.vue'
 
-import { ref } from 'vue'
-import { debouncedWatch } from '@vueuse/core'
-
-import { useLoader } from './composables/useLoader'
-
-const defaultMessage = 'To prompt Modal Dialog press one of the buttons below:'
-const message = ref(defaultMessage)
-
-// Example how to use `createConfirmDialog` with hooks
-// pass your modal component to the function
-const { reveal, onConfirm, onCancel, close, isRevealed, closeAll } =
-  createConfirmDialog(ModalWindow)
-onConfirm(() => {
-  message.value = 'Confirmed!'
-})
-onCancel(() => {
-  message.value = 'Canceled!'
-})
-
-// For reusing component just call `reveal` again and pass to it object of props.
-const reuse = () => {
-  reveal({ msg: 'Reuse Modal Component' })
-}
-
-// Example how to use it in Promise style
-// We are reusing the same component
-// You need to rename `reveal` to avoid conflict with the first usage
-// Pass new props of modal component in a second argument if you need to
-const { reveal: reveal2 } = createConfirmDialog(ModalWindow, {
-  msg: 'Modal #2',
-})
-
-// Build an async function to use it in a template
-const showDialog = async () => {
-  const { data, isCanceled } = await reveal2({ msg: 'New Message!' }) // pass new props to modal component
-  if (!isCanceled) message.value = 'Confirmed dialog #2!'
-  else message.value = 'Canceled dialog #2!'
-}
-
-// Alert Message
-const showAlert = useAlertMessage()
-
-// Reset message after 2000 ms
-debouncedWatch(
-  message,
-  () => {
-    message.value = defaultMessage
-  },
-  { debounce: 2000 }
-)
-
-// It doesn't work second time!!!
-debouncedWatch(
-  isRevealed,
-  () => {
-    close()
-    message.value = 'No hook triggered!'
-  },
-  { debounce: 2000 }
-)
-
-// Loader Component
-const fetchData = () => {
-  // Here go your API Call, I tested it with promise
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('Loading data is finished!')
-    }, 2000)
-  })
-}
-
-const loader = useLoader(fetchData)
-
-loader.onLoaded((data) => {
-  message.value = data
-})
 </script>
 
 <template>
-  <div class="main-container">
-    <div class="card shadow-xl">
-      <div class="justify-end card-body">
-        <h1 class="card-title">Hi!</h1>
-        <p class="card-title text-error">{{ message }}</p>
-        <div class="card-actions">
-          <button class="btn btn-primary" @click="reveal">Dialog</button>
-          <button class="btn btn-secondary" @click="showDialog">
-            Dialog 2
-          </button>
-          <button class="btn btn-error" @click="showAlert('Yes!')">
-            Alert!
-          </button>
-          <button class="btn btn-secondary" @click="loader.start">
-            Load Data
-          </button>
-          <button class="btn btn-error" @click="closeAll">
-            Close All Dialogs
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="card shadow-xl">
-      <div class="justify-end card-body">
-        <EditableTable />
-      </div>
-    </div>
-  </div>
+  <article class="main-container">
+    <IntroductionPart />
+    <BasicExample />
+    <AlertExample />
+    <LoaderExample />
+    <TableExample />
+  </article>
 
   <!-- put it in the template of your App.vue file to make this library work -->
   <div class="alerts-container">
@@ -126,7 +27,7 @@ loader.onLoaded((data) => {
 @import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css';
 
 .alerts-container {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -135,9 +36,64 @@ loader.onLoaded((data) => {
   width: 380px;
 }
 .main-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 15px 15px;
+  padding: 15px 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: white;
+  box-shadow: #f2f2f2;
+}
+h1, h2 {
+  text-align: center;
+}
+
+body {
+  background-color: #f2f2f2;
+  height: 100%;
+  font-size: 16px;
+}
+.article-title {
+  font-size: 36px;
+  text-transform: capitalize;
+  font-weight: 500;
+  margin: 15px 0px;
+}
+.card {
+  border: 2px solid #f0f0f0;
+}
+.code-card {
+  background-color: #2f2f2f;
+  color: #80cbc4;
+}
+.html-code {
+  background: none; 
+  border: none; 
+  resize: none; 
+  outline: none; 
+  width: 100%;
+  overflow: hidden;
+}
+.widget {
+    display: inline-block;
+    overflow: hidden;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+}
+.inline-code {
+  background-color: #e3e2e2;
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+.input {
+  font-size: 18px!important;
+}
+.divider {
+  margin-bottom: 100px;
+  margin-top: 40px;
+}
+.divider:after, .divider:before {
+    background-color: #bbbbbb;
 }
 </style>

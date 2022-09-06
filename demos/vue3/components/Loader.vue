@@ -165,6 +165,7 @@ const emit = defineEmits(['confirm', 'cancel'])
 const { process } = defineProps({
   process: {
     type: Function,
+    required: true
   },
 })
 
