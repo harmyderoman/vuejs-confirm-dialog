@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import PopupEdit from './components/PopupEdit.vue'
-import { createConfirmDialog } from './../../src/createConfirmDialog'
+import PopupEdit from './PopupEdit.vue'
+import { createConfirmDialog } from './../../../src/index'
 
 const editValue = (
     val: string | number,
