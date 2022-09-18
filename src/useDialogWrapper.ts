@@ -12,8 +12,8 @@ export type DialogData<C extends DefineComponent<any,any,any,any,any,any>> = {
   id: number
   dialog: C
   isRevealed: Ref<boolean>
-  confirm: (data?: ComponentProps<C>) => void
-  cancel: (data?: ComponentProps<C>) => void
+  confirm: (props?: ComponentProps<C>) => void
+  cancel: (props?: ComponentProps<C>) => void
   props: ComponentProps<C>,
   close: () => void,
   revealed: Ref<boolean>
