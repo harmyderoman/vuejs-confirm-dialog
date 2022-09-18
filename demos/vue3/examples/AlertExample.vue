@@ -11,7 +11,12 @@ const showAlert = useAlertMessage()
   <h2 class="card-title">Alert Example and passing props</h2>
   <p>
     You can use this package to build your own alerts system. Also, you can pass
-    props to the dialog component.
+    props to the dialog component. 
+    <a 
+      class="link link-primary" 
+      href="https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/examples/AlertExample.vue">
+        Code.
+    </a>
   </p>
 
   <div class="card shadow-xl mt-4 mb-4">
