@@ -1,5 +1,5 @@
 import { ref, watch, computed } from 'vue-demi'
-import type { ComputedRef, Ref, Component, DefineComponent } from 'vue-demi'
+import type { ComputedRef, DefineComponent } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -7,7 +7,15 @@ import {
   UseConfirmDialogRevealResult,
 } from '@vueuse/core'
 
-export type ComponentProps<C extends DefineComponent<any,any,any,any,any,any>> = InstanceType<C>["$props"];
+export type ComponentProps<C extends DefineComponent<any,any,any,any,any,any>> = 
+  InstanceType<C>["$props"];
+
+
+let lastDialogId = 0
+
+function getDialogId() {
+    return ++lastDialogId
+}
 
 /**
  * Function that makes simple to create, reuse, 
@@ -23,7 +31,8 @@ export type ComponentProps<C extends DefineComponent<any,any,any,any,any,any>> =
  * `close` - close the dialog without triggering any hook and don't change `isRevealed`
  * `closeAll` - close all open dialogs
  */
-export function createConfirmDialog<C extends DefineComponent<any, any, any,any,any,any,any,any>> (
+export function createConfirmDialog
+  <C extends DefineComponent<any, any, any,any,any,any,any,any>> (
   dialog: C,
   props: ComponentProps<C> = {}
 ): {
@@ -61,7 +70,7 @@ export function createConfirmDialog<C extends DefineComponent<any, any, any,any,
     cancel 
   } = useConfirmDialog()
 
-  const DIALOG_ID = Math.floor(Math.random() * 1000000000)
+  const DIALOG_ID = getDialogId()
 
   onReveal((props?: ComponentProps<C>) => {
 
