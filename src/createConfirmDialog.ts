@@ -1,4 +1,5 @@
-import { ref, ComputedRef, Ref, Component, watch, computed } from 'vue-demi'
+import { ref, watch, computed } from 'vue-demi'
+import type { ComputedRef, DefineComponent } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -6,8 +7,14 @@ import {
   UseConfirmDialogRevealResult,
 } from '@vueuse/core'
 
-export type PropsData = {
-  [key: string]: any
+export type ComponentProps<C extends DefineComponent<any,any,any,any,any,any>> = 
+  InstanceType<C>["$props"];
+
+
+let lastDialogId = 0
+
+function getDialogId() {
+    return ++lastDialogId
 }
 
 /**
@@ -24,17 +31,18 @@ export type PropsData = {
  * `close` - close the dialog without triggering any hook and don't change `isRevealed`
  * `closeAll` - close all open dialogs
  */
-export const createConfirmDialog = function (
-  dialog: Component,
-  props: PropsData = {}
+export function createConfirmDialog
+  <C extends DefineComponent<any, any, any,any,any,any,any,any>> (
+  dialog: C,
+  props: ComponentProps<C> = {}
 ): {
   close: () => void
 
   closeAll: () => void
 
   reveal: (
-    data?: PropsData
-  ) => Promise<UseConfirmDialogRevealResult<PropsData, boolean>>
+    props?: ComponentProps<C>
+  ) => Promise<UseConfirmDialogRevealResult<any, boolean>>
 
   isRevealed: ComputedRef<boolean>
 
@@ -42,7 +50,7 @@ export const createConfirmDialog = function (
 
   onCancel: EventHookOn
 } {
-  const propsRef: Ref<PropsData> = ref(props)
+  const propsRef = ref(props)
   const revealed = ref(false)
 
   const close = () => {
@@ -51,6 +59,7 @@ export const createConfirmDialog = function (
   }
 
   const { addDialog, removeDialog, removeAll, DialogsStore } = useDialogWrapper()
+
   const { 
     reveal,
     isRevealed, 
@@ -61,13 +70,13 @@ export const createConfirmDialog = function (
     cancel 
   } = useConfirmDialog()
 
-  const DIALOG_ID = Math.floor(Math.random() * 1000000000)
+  const DIALOG_ID = getDialogId()
 
-  onReveal((data?: PropsData) => {
+  onReveal((props?: ComponentProps<C>) => {
 
     revealed.value = true
-    for (const prop in data) {
-      propsRef.value[prop] = data[prop]
+    for (const prop in props) {
+      propsRef.value[prop] = props[prop]
     }
 
     addDialog({

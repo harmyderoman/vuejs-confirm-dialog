@@ -35,6 +35,13 @@ loader.onLoaded((data) => {
         <button class="btn btn-info" @click="loader.start()">Load Data</button>
       </div>
   </div>
+  <p>
+    <a 
+      class="link link-primary" 
+      href="https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/examples/LoaderExample.vue">
+        Code of Example
+    </a>
+  </p>
 
   <div class="divider"></div>
 </template>

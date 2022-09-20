@@ -1,29 +1,29 @@
-import { Component, markRaw, Ref, reactive } from 'vue-demi'
-import { PropsData } from './index'
+import { markRaw, Ref, reactive, DefineComponent } from 'vue-demi'
+import { ComponentProps } from './index'
 
 export type UseDialogWrapperReturn = {
-  DialogsStore: DialogData[]
-  addDialog: (dialogData: DialogData) => void,
+  DialogsStore: DialogData<any>[]
+  addDialog: (dialogData: DialogData<any>) => void,
   removeDialog: (id: number) => void,
   removeAll: () => void
 }
 
-export type DialogData = {
+export type DialogData<C extends DefineComponent<any,any,any,any,any,any>> = {
   id: number
-  dialog: Component
+  dialog: C
   isRevealed: Ref<boolean>
-  confirm: (data?: PropsData) => void
-  cancel: (data?: PropsData) => void
-  props: PropsData,
+  confirm: (props?: ComponentProps<C>) => void
+  cancel: (props?: ComponentProps<C>) => void
+  props: ComponentProps<C>,
   close: () => void,
   revealed: Ref<boolean>
 }
 
-const DialogsStore: DialogData[] = reactive([])
+const DialogsStore: DialogData<any>[] = reactive([])
 
 export const useDialogWrapper = function (): UseDialogWrapperReturn {
 
-  const addDialog = function (dialogData: DialogData) {
+  const addDialog = function (dialogData: DialogData<any>) {
     DialogsStore.push(markRaw(dialogData))
   }
 

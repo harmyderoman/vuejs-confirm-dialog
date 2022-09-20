@@ -2,16 +2,21 @@
 import { useAlertMessage } from './../composables/useAlertMessage'
 import { ref } from 'vue'
 
-const text = ref('Stam')
+const text = ref('Default Alert Message')
 
 const showAlert = useAlertMessage()
 </script>
 
 <template>
-  <h2 class="card-title">Alert Example and passing props:</h2>
+  <h2 class="card-title">Alert Example and passing props</h2>
   <p>
-    You can use this packege to build your own alerts system. Also you can pass
-    props to dialog component.
+    You can use this package to build your own alerts system. Also, you can pass
+    props to the dialog component. 
+    <a 
+      class="link link-primary" 
+      href="https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/examples/AlertExample.vue">
+        Code.
+    </a>
   </p>
 
   <div class="card shadow-xl mt-4 mb-4">
