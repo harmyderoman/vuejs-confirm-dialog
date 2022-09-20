@@ -5,7 +5,10 @@
   <template>
     <h2 class="card-title">Edit Table with Popup</h2>
     <p>
-      Use this package to create and reuse popups:
+      You can use this package to create and reuse popups. 
+    </p>
+    <p>
+      To edit the values in the table, click on one of the cells.
     </p>
   
     <div class="card shadow-xl mt-4 mb-4">
@@ -17,7 +20,7 @@
       <a 
         class="link link-primary" 
         href="https://github.com/harmyderoman/vuejs-confirm-dialog/blob/main/demos/vue3/components/EditableTable.vue">
-          Code of Example
+          Editable Table Example
       </a>
     </p>
     <div class="divider"></div>

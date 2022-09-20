@@ -27,7 +27,7 @@ import GithubButton from 'vue-github-button'
 
   <h2 class="card-title">Introduction</h2>
   <p>
-    This package just makes it simple to create, reuse, promisify, and build
+    This <a class="link link-primary" href="https://github.com/harmyderoman/vuejs-confirm-dialog" target="_blank">package</a> just makes it simple to create, reuse, promisify, and build
     chains of modal dialogs in Vue.js. For now, it provides just one function
     <code class="inline-code">createConfirmDialog</code> that does all the hard work for you.
   </p>
