@@ -1,6 +1,6 @@
 {
 	"name": "vuejs-confirm-dialog",
-	"version": "0.4.9",
+	"version": "0.4.10",
 	"packageManager": "pnpm@7.12.2",
 	"main": "./dist/vuejs-confirm-dialog.umd.js",
 	"module": "./dist/vuejs-confirm-dialog.es.js",
@@ -72,9 +72,9 @@
 		"vue-tsc": "^0.31.4"
 	},
 	"pnpm": {
-    "overrides": {
-      "vue-demi": "0.13.11",
-      "vite": "^2.8.6"
-    }
-  }
+		"overrides": {
+			"vue-demi": "0.13.11",
+			"vite": "^2.8.6"
+		}
+	}
 }
