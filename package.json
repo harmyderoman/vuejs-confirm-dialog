@@ -1,6 +1,7 @@
 {
 	"name": "vuejs-confirm-dialog",
 	"version": "0.4.9",
+	"packageManager": "pnpm@7.12.2",
 	"main": "./dist/vuejs-confirm-dialog.umd.js",
 	"module": "./dist/vuejs-confirm-dialog.es.js",
 	"types": "./dist/index.d.ts",
@@ -58,6 +59,7 @@
 		"eslint-plugin-prettier": "^3.4.1",
 		"eslint-plugin-vue": "^8.5.0",
 		"happy-dom": "^2.46.3",
+		"pnpm": "^7.14.2",
 		"prettier": "^2.5.1",
 		"sass": "^1.49.9",
 		"typescript": "^4.6.2",
@@ -68,5 +70,11 @@
 		"vue-github-button": "^3.1.0",
 		"vue-template-compiler": "^2.2.0",
 		"vue-tsc": "^0.31.4"
-	}
+	},
+	"pnpm": {
+    "overrides": {
+      "vue-demi": "0.13.11",
+      "vite": "^2.8.6"
+    }
+  }
 }
