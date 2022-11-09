@@ -111,9 +111,9 @@ const dialog = createConfirmDialog(ModalDialog)
 const confirmDelete = async () => {
   const { data, isCanceled } = await dialog.reveal()
 
-  if(!isCanceled) deleteYourData(data)
-
-  console.log(`You ${ isCanceled ? 'canceled' : 'confirmed' } deleting data.`)
+  if(isCanceled) return
+  
+  deleteYourData(data)
 }
 </script>
 ```
