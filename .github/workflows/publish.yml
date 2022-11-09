@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: pnpm run build:ci
+      - run: pnpm run build
 
   publish-npm:
     needs: build
