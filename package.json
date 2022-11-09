@@ -1,6 +1,6 @@
 {
 	"name": "vuejs-confirm-dialog",
-	"version": "0.4.11",
+	"version": "0.4.12",
 	"packageManager": "pnpm@7.12.2",
 	"main": "./dist/vuejs-confirm-dialog.umd.js",
 	"module": "./dist/vuejs-confirm-dialog.es.js",
