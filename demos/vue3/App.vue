@@ -96,4 +96,35 @@ body {
 .divider:after, .divider:before {
     background-color: #bbbbbb;
 }
+
+.warning-block {
+  box-sizing: border-box;
+  border: 1px solid #ffc517;
+  margin: 28px 0;
+    padding: 20px 24px 25px 42px;
+    border-radius: 8px;
+    overflow-x: auto;
+    transition: color .5s,background-color .5s;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 500;
+    color: #0000008c;
+    background-color: #f9f9f9;
+}
+.warning-block:before {
+  content: "\26a0";
+    font-size: 17px;
+    top: 19px;
+    left: 16ppx;
+}
+
+.warning-block_title {
+  display: inline-block;
+  margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--vt-c-text-1);
+    transition: color .5s;
+}
 </style>

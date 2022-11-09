@@ -31,5 +31,13 @@ import GithubButton from 'vue-github-button'
     chains of modal dialogs in Vue.js. For now, it provides just one function
     <code class="inline-code">createConfirmDialog</code> that does all the hard work for you.
   </p>
+  <div class="warning-block">
+    <p class="warning-block_title">Warning!</p>
+    <p>This package does not provide components for now. These examples are not production-ready components! Use it on your own risk!</p>
+  </div>
   <div class="divider"></div>
 </template>
+
+<style>
+
+</style>
