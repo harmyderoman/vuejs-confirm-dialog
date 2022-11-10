@@ -1,19 +1,20 @@
-import { PropsData, DialogsWrapper, createConfirmDialog } from './../../src/index'
+import { ComponentProps, DialogsWrapper, createConfirmDialog } from './../../src/index'
 import { useDialogWrapper } from './../../src/useDialogWrapper'
 import { useSetup } from '../utils'
-import { Component, nextTick } from 'vue'
+import { Component, nextTick, defineComponent } from 'vue'
 import { useConfirmDialog } from '@vueuse/core'
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import DialogComponent from './DialogComponent.vue'
+import { ref } from 'vue'
 
-const ModalDialog: Component = {
+const ModalDialog = defineComponent({
   name: 'ModalDialog',
   props: {
     message: String
   },
   emits: ['confirm', 'cancel']
-}
+})
 
 const clearDialogsStore = function () {
   const { DialogsStore } = useDialogWrapper()
@@ -175,21 +176,15 @@ describe('createConfirmDialog', () => {
     const dialog2 = createConfirmDialog(ModalDialog)
 
     dialog.reveal()
-    // await nextTick()
     dialog2.reveal()
 
     expect(dialog.isRevealed.value).toBe(true)
     expect(dialog2.isRevealed.value).toBe(true)
 
-    // await nextTick()
-
     dialog.closeAll()
 
-    // await nextTick()
 
     expect(dialog.isRevealed.value).toBe(false)
-    // await nextTick()
-    // expect(dialog2.isRevealed.value).toBe(false)
 
     clearDialogsStore()
   })
@@ -214,7 +209,11 @@ describe('DialogsWrapper.vue', () => {
       confirm,
       cancel,
       props: {},
-      id: 0
+      id: 0,
+      close: function (): void {
+        throw new Error('Function not implemented.')
+      },
+      revealed: ref(false)
     })
 
     await nextTick()
@@ -235,7 +234,7 @@ describe('useDialogWrapper', () => {
 
   it('should add Vue component to the DialogsStore', async () => {
     const simpleComponent = {} as Component
-    const props = {} as PropsData
+    const props = {}
 
     const wrapper = useSetup(() => {
       const { DialogsStore, addDialog } = useDialogWrapper()
@@ -246,7 +245,11 @@ describe('useDialogWrapper', () => {
         confirm,
         cancel,
         props,
-        id: 0
+        id: 0,
+        close: function (): void {
+          throw new Error('Function not implemented.')
+        },
+        revealed: ref(false)
       })
 
       return { DialogsStore }
