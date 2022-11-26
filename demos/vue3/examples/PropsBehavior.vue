@@ -48,15 +48,15 @@ debouncedWatch(
   <h2 class="card-title">Props Behavior Config Example</h2>
   <h3>Try different props configurations to see the difference</h3>
   <div>
-    <div class="flex flex-col">
+    <div class="flex flex-row">
       <div class="form-control" style="width: fit-content;">
         <label class="label cursor-pointer flex flex-col items-start gap-2">
-          <span class="label-text">
+          <code>
             { chore:
             <i :style="{ color: chore ? 'hsl(var(--p))': 'hsl(var(--s))'}">
               <code>{{ chore }}</code>
             </i> ,
-          </span>
+          </code>
           <input
             type="checkbox"
             class="toggle toggle-primary"
@@ -66,12 +66,12 @@ debouncedWatch(
       </div>
       <div class="form-control" style="width: fit-content;">
         <label class="label cursor-pointer flex flex-col items-start gap-2">
-          <span class="label-text">
+          <code>
             keepInitial:
             <i :style="{ color: keepInitial ? 'hsl(var(--p))': 'hsl(var(--s))'}">
               <code>{{ keepInitial }}</code>
             </i> }
-          </span >
+          </code >
           <input
             type="checkbox"
             class="toggle toggle-accent"
@@ -79,6 +79,7 @@ debouncedWatch(
           />
         </label>
       </div>
+    </div>
       <div class="form-control w-full max-w-xs mb-2">
         <label class="label">Initial message: </label>
         <input
@@ -87,7 +88,6 @@ debouncedWatch(
           class="input input-bordered input-error w-full max-w-xs"
         />
       </div>
-    </div>
 
     <button class="btn btn-accent" @click="createDialog">Create Dialog</button>
   </div>
