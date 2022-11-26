@@ -6,21 +6,16 @@
 
   const defaultMessage = 'Open Dialog and confirm action'
   const message = ref(defaultMessage)
-
-  const { reveal, onConfirm, onCancel } = createConfirmDialog(SimpleModal, 
-  { msg: 'Init Msg!'}, 
-  { chore: true, keepInitial: true })
-
+  const { reveal, onConfirm, onCancel } = createConfirmDialog(SimpleModal)
+  
   // Callback inside this hook will be called if the user confirms the dialog 
   onConfirm(() => {
     message.value = 'Confirmed!'
   })
-
   // This will be called on canceling
   onCancel(() => {
     message.value = 'Canceled!'
   })
-
   // Reset message after 2000 ms
   debouncedWatch(
     message,
@@ -42,9 +37,7 @@
         <p class="card-title">Dialog status: 
           <span class="text-error">{{ message }}</span>
         </p>
-        <button class="btn btn-primary" @click="reveal({ msg: 'Test Msg!'})">Open Dialog</button>
-        <p>Test:</p>
-        <button class="btn btn-primary" @click="reveal()">Test Dialog</button>
+        <button class="btn btn-primary" @click="reveal()">Open Dialog</button>
       </div>
   </div>
 
