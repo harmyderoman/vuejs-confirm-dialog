@@ -1,9 +1,18 @@
 import { defineComponent, h } from "vue"
 
-export default defineComponent({
-  emits: ['confirm', 'cancel'],
+const DEFAULT_MESSAGE = "Default Message"
 
+ const DialogComp = defineComponent({
+  emits: ['confirm', 'cancel'],
+  props: {
+    message: {
+      type: String,
+      default: DEFAULT_MESSAGE
+    }
+  },
   render() {
     return h('div')
   }
 })
+
+export default DialogComp
