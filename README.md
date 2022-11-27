@@ -94,8 +94,9 @@ onCancel(() => {
 ### Two ways of usage
 
 The package lets you decide how to use it. The first way is to use hooks:
-`onConfirm` - hook gets a callback that runs after the user confirmed the modal message
-`onCancel` - run callback if the user decides to click cancel
+
+- `onConfirm` - hook gets a callback that runs after the user confirmed the modal message
+- `onCancel` - run callback if the user decides to click cancel
 
 The second way is promisify modal dialog. `reveal` the function returns a Promise, that resolves data and `isCanceled` boolean from the dialog after the user commits the action.
 
@@ -121,11 +122,11 @@ const confirmDelete = async () => {
 ## Passing data to/from the dialog
 
 It will be not so useful if we will not have the option to pass data to and from а component.
-There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be the initial props that the dialog component will receive.
+There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of the component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be the initial props that the dialog component will receive.
 
 You can change props values during the calling `reveal` function by passing to its object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
 
-And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use async/await syntax if you prefer to.
+And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use the async/await syntax if you prefer.
 
 The full example, that displays passing data, reusing, and modal chains:
 
@@ -178,7 +179,7 @@ The simplest example:
 ```javascript
   const dialog = createConfirmDialog(
     ModalComponent,
-    { message: 'Some message...' }, // you have to pass at least empty object even if you don't want pass any
+    { message: 'Some message...' }, // Initial props values
     { chore: true, keepInitial: true }
   )
 ```
