@@ -120,10 +120,10 @@ const confirmDelete = async () => {
 
 ## Passing data to/from the dialog
 
-It will be not so useful if we will not have an option to pass data to and from а component.
-There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be initial props that the dialog component will receive.
+It will be not so useful if we will not have the option to pass data to and from а component.
+There are several ways to deal with it. First of all, you can pass data to the second argument of the `createConfirmDialog` function. Data must be an object with names of properties matching to props of component you use as dialog. For example, if a component has a prop with the name `title` we have to pass this `{ title: 'Some Title' }`. So these will be the initial props that the dialog component will receive.
 
-You can change props values during calling `reveal` function by passing to its object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
+You can change props values during the calling `reveal` function by passing to its object with props data. So you can call the `reveal` function several times with different props. This is an excellent way to reuse the same dialog in different situations.
 
 And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use async/await syntax if you prefer to.
 
@@ -158,6 +158,30 @@ const login = async () => {
 </script>
 ```
 
+## Props Behavior Options
+
+Unfortunately, the way of passing props is not so clear to the developers. The problem occurs when you try to reuse a dialog instance already created with `createConfirmDialog`. See also the [issue](https://github.com/harmyderoman/vuejs-confirm-dialog/issues/21).
+
+Let's consider this process step by step. Props values ​​are assigned three times, the first time is default props values, in the component, this package does not show up on them in any way. The second time occurs on creating an instance of the dialog, let's define these values ​​as initial props. The third time passing values ​​is possible when the user prompts the dialog using the `reveal` method. If you don't set the props behavior options, then each time you pass values, this data will be saved.
+
+For example, if you have an alert component and you called it with the message "Authorization failed!", then next time if you don't pass a new message value, it will show this message again.
+
+Perhaps it will be convenient if every time after closing the dialog, the values ​​of the props will be reset to the initial or even default values. For this functionality, props transfer settings have been added.
+
+There are only two options:
+
+- `chore` - if `true` will tell to function reset values after closing dialog
+- `keepInitial` - if `true` reset props values to initial values, otherwise to default values of the component
+
+The simplest example:
+
+```javascript
+  const dialog = createConfirmDialog(
+    ModalComponent,
+    { message: 'Some message...' }, // you have to pass at least empty object even if you don't want pass any
+    { chore: true, keepInitial: true }
+  )
+```
 ## Using inside Options API
 
 If you prefer you can use it with Options API inside methods.
@@ -208,6 +232,7 @@ setTimeout(() => {
 It also doesn't trigger any hooks.
 
 If you need to close all dialog just call `dialog.closeAll()`.
+
 
 ## Demo
 
