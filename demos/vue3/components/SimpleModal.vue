@@ -2,7 +2,7 @@
 defineProps({
   msg: {
     type: String,
-    default: 'The modal dialog message',
+    default: 'The default dialog message',
   },
 })
 

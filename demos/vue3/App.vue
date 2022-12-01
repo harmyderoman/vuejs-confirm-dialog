@@ -4,6 +4,7 @@ import BasicExample from './examples/BasicExample.vue'
 import LoaderExample from './examples/LoaderExample.vue'
 import TableExample from './examples/TableExample.vue'
 import AlertExample from './examples/AlertExample.vue'
+import PropsBehavior from './examples/PropsBehavior.vue'
 
 </script>
 
@@ -14,6 +15,7 @@ import AlertExample from './examples/AlertExample.vue'
     <AlertExample />
     <LoaderExample />
     <TableExample />
+    <PropsBehavior />
   </article>
 
   <!-- put it in the template of your App.vue file to make this library work -->
@@ -126,5 +128,9 @@ body {
     font-weight: 500;
     color: var(--vt-c-text-1);
     transition: color .5s;
+}
+
+.label-text {
+  font-size: 1rem;
 }
 </style>

@@ -1,19 +1,14 @@
-import { PropsData, DialogsWrapper, createConfirmDialog } from './../../src/index'
+import { DialogsWrapper, createConfirmDialog } from './../../src/index'
 import { useDialogWrapper } from './../../src/useDialogWrapper'
 import { useSetup } from '../utils'
 import { Component, nextTick } from 'vue'
 import { useConfirmDialog } from '@vueuse/core'
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import DialogComponent from './DialogComponent.vue'
+import DialogComp from './../components/DialogComp'
+import { ref } from 'vue'
 
-const ModalDialog: Component = {
-  name: 'ModalDialog',
-  props: {
-    message: String
-  },
-  emits: ['confirm', 'cancel']
-}
+const INITIAL_MESSAGE = "Initial Message"
 
 const clearDialogsStore = function () {
   const { DialogsStore } = useDialogWrapper()
@@ -22,24 +17,100 @@ const clearDialogsStore = function () {
   }
 }
 
+describe('Props Behavior Options', () => {
+  it('should accept prop options, and do nothing with all options set to false', async () => {
+
+    const { reveal } = createConfirmDialog(DialogComp, 
+      { message: INITIAL_MESSAGE}, 
+      { chore: false, keepInitial: false }
+    )
+
+    const TEST_MESSAGE = 'test message'
+
+    reveal({ message: TEST_MESSAGE })
+    await nextTick()
+    const { DialogsStore } = useDialogWrapper()
+
+    expect(DialogsStore[0].isRevealed.value).toBe(true)
+    expect(DialogsStore[0].props.message).toBe(TEST_MESSAGE)
+
+    DialogsStore[0].confirm()
+    await nextTick()
+    reveal()
+    await nextTick()
+
+    expect(DialogsStore[0].isRevealed.value).toBe(true)
+    expect(DialogsStore[0].props.message).toBe(TEST_MESSAGE)
+
+    clearDialogsStore()
+  })
+
+  it(`should return to default props values of modal component, 
+      if { chore: true, keepInitial: false }`, async () => {
+
+    const { reveal, isRevealed } = createConfirmDialog(DialogComp, 
+      { message: INITIAL_MESSAGE }, 
+      { chore: true, keepInitial: false }
+    )
+    const INIT_PROP = 'test prop'
+    reveal({ message: INIT_PROP })
+    await nextTick()
+    const { DialogsStore } = useDialogWrapper()
+    expect(DialogsStore[0].props.message).toBe(INIT_PROP)
+
+    DialogsStore[0].confirm()
+    await nextTick()
+    expect(isRevealed.value).toBe(false)
+    reveal()
+    await nextTick()
+    expect(isRevealed.value).toBe(true)
+    expect(DialogsStore[0].props.message).toBe(undefined)
+
+    clearDialogsStore()
+  })
+  it(`should return to initial props values passed to create function, 
+      if { chore: true, keepInitial: true }`, async () => {
+
+    const { reveal, isRevealed } = createConfirmDialog(DialogComp, 
+      { message: INITIAL_MESSAGE }, 
+      { chore: true, keepInitial: true }
+    )
+    const INIT_PROP = 'test prop'
+    reveal({ message: INIT_PROP })
+    await nextTick()
+    const { DialogsStore } = useDialogWrapper()
+    expect(DialogsStore[0].props.message).toBe(INIT_PROP)
+
+    DialogsStore[0].confirm()
+    await nextTick()
+    expect(isRevealed.value).toBe(false)
+    reveal()
+    await nextTick()
+    expect(isRevealed.value).toBe(true)
+    expect(DialogsStore[0].props.message).toBe(INITIAL_MESSAGE)
+
+    clearDialogsStore()
+  })
+})
+
 describe('createConfirmDialog', () => {
   it('should be defined', () => {
     expect(createConfirmDialog).toBeDefined()
   })
 
   it('should add Vue component to the DialogsStore', () => {
-    const { reveal } = createConfirmDialog(ModalDialog)
+    const { reveal } = createConfirmDialog(DialogComp)
 
     reveal()
 
     const { DialogsStore } = useDialogWrapper()
-    expect(DialogsStore[0].dialog).toBe(ModalDialog)
+    expect(DialogsStore[0].dialog).toBe(DialogComp)
 
     clearDialogsStore()
   })
 
   it('should set `isRevealed.value` to `true` after call the dialog', () => {
-    const { reveal, isRevealed } = createConfirmDialog(ModalDialog)
+    const { reveal, isRevealed } = createConfirmDialog(DialogComp)
     reveal()
 
     expect(isRevealed.value).toBe(true)
@@ -48,7 +119,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should set `isRevealed.value` to `false` after confirming or canceling the dialog', () => {
-    const { reveal, isRevealed } = createConfirmDialog(ModalDialog)
+    const { reveal, isRevealed } = createConfirmDialog(DialogComp)
     reveal()
 
     const { DialogsStore } = useDialogWrapper()
@@ -65,7 +136,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should call `onConfirm` and `onCancel` hooks', () => {
-    const { reveal, onConfirm, onCancel } = createConfirmDialog(ModalDialog)
+    const { reveal, onConfirm, onCancel } = createConfirmDialog(DialogComp)
 
     let isCalled = false
     onConfirm(() => {
@@ -89,7 +160,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should pass props to component by the second argument', () => {
-    const { reveal } = createConfirmDialog(ModalDialog, { message: 'message' })
+    const { reveal } = createConfirmDialog(DialogComp, { message: 'message' })
     reveal()
 
     const { DialogsStore } = useDialogWrapper()
@@ -99,7 +170,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should pass props to component by `reveal()` argument', () => {
-    const { reveal } = createConfirmDialog(ModalDialog)
+    const { reveal } = createConfirmDialog(DialogComp)
     reveal({ message: 'message' })
 
     const { DialogsStore } = useDialogWrapper()
@@ -109,7 +180,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should return promise on reveil', async () => {
-    const { reveal } = createConfirmDialog(ModalDialog)
+    const { reveal } = createConfirmDialog(DialogComp)
 
     let isCanceled: boolean | undefined
     const { DialogsStore } = useDialogWrapper()
@@ -142,7 +213,7 @@ describe('createConfirmDialog', () => {
   })
 
   it('should close dialog without triggering any hook', async () => {
-    const dialog = createConfirmDialog(ModalDialog)
+    const dialog = createConfirmDialog(DialogComp)
     let onConfirmTriggered = false
     let onCancelTriggered = false
 
@@ -171,25 +242,20 @@ describe('createConfirmDialog', () => {
     clearDialogsStore()
   })
   it('should close all dialogs', async () => {
-    const dialog = createConfirmDialog(ModalDialog)
-    const dialog2 = createConfirmDialog(ModalDialog)
+    const dialog = createConfirmDialog(DialogComp)
+    const dialog2 = createConfirmDialog(DialogComp)
 
     dialog.reveal()
-    // await nextTick()
     dialog2.reveal()
 
     expect(dialog.isRevealed.value).toBe(true)
     expect(dialog2.isRevealed.value).toBe(true)
 
-    // await nextTick()
-
     dialog.closeAll()
 
-    // await nextTick()
 
     expect(dialog.isRevealed.value).toBe(false)
-    // await nextTick()
-    // expect(dialog2.isRevealed.value).toBe(false)
+    expect(dialog2.isRevealed.value).toBe(false)
 
     clearDialogsStore()
   })
@@ -209,17 +275,21 @@ describe('DialogsWrapper.vue', () => {
     const { addDialog } = useDialogWrapper()
     const { isRevealed, confirm, cancel } = useConfirmDialog()
     addDialog({
-      dialog: DialogComponent,
+      dialog: DialogComp,
       isRevealed,
       confirm,
       cancel,
       props: {},
-      id: 0
+      id: 0,
+      close: function (): void {
+        throw new Error('Function not implemented.')
+      },
+      revealed: ref(false)
     })
 
     await nextTick()
 
-    const modal = wrapper.findComponent(DialogComponent)
+    const modal = wrapper.findComponent(DialogComp)
     expect(modal.exists()).toBe(true)
 
     clearDialogsStore()
@@ -235,7 +305,7 @@ describe('useDialogWrapper', () => {
 
   it('should add Vue component to the DialogsStore', async () => {
     const simpleComponent = {} as Component
-    const props = {} as PropsData
+    const props = {}
 
     const wrapper = useSetup(() => {
       const { DialogsStore, addDialog } = useDialogWrapper()
@@ -246,7 +316,11 @@ describe('useDialogWrapper', () => {
         confirm,
         cancel,
         props,
-        id: 0
+        id: 0,
+        close: function (): void {
+          throw new Error('Function not implemented.')
+        },
+        revealed: ref(false)
       })
 
       return { DialogsStore }
