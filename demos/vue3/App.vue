@@ -19,9 +19,9 @@ import PropsBehavior from './examples/PropsBehavior.vue'
   </article>
 
   <!-- put it in the template of your App.vue file to make this library work -->
-  <div class="alerts-container">
+  <!-- <div class="alerts-container"> -->
     <DialogsWrapper />
-  </div>
+  <!-- </div> -->
 </template>
 
 <style>
