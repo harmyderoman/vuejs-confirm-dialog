@@ -6,7 +6,7 @@
 
   const defaultMessage = 'Open Dialog and confirm action'
   const message = ref(defaultMessage)
-  const { reveal, onConfirm, onCancel } = createConfirmDialog(SimpleModal)
+  const { reveal, onConfirm, onCancel } = createConfirmDialog(SimpleModal, { msg: "Confirm?" })
   
   // Callback inside this hook will be called if the user confirms the dialog 
   onConfirm(() => {
