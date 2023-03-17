@@ -12,8 +12,8 @@ type EmitsTypes = {
   (e: EmitName, value?: any): void
 }
 
+// const emit = defineEmits(['confirm', 'cancel']) // must emits
 const emit = defineEmits<EmitsTypes>() // must emits
-
 const show = ref(false)
 const duration = ref(300)
 
@@ -31,7 +31,7 @@ const handleEmit = (emitAction: EmitName, val?: any) => {
 <template>
   <ModalBox
     overlay
-    :transition="'scale'"
+    :transition="'fade'"
     :show="show"
     :duration="duration"
     focus-trap
