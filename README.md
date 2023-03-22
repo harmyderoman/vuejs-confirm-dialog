@@ -2,6 +2,9 @@
 
 This package just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js. For now, it provides just one function `createConfirmDialog` that does all the hard work for you.
 
+> New documentation is ready! Try a new [site](https://vcd-docs.netlify.app) that contains all the docs of the project!
+> [vcd-docs.netlify.app](https://vcd-docs.netlify.app)
+
 ## About
 
 How does it work? The idea is simple, this function -- `createConfirmDialog` gets a modal component and magically provides to it emits `confirm` and `cancel` and its props values. This function returns to you a dialog instance that controls the rendering of the modal component and reacts to user decisions. It reduces you to write all the boilerplate code over and over again and makes it simple to reuse your modals everywhere in your project.
