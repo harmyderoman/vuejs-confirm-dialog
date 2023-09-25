@@ -1,6 +1,8 @@
 # vuejs-confirm-dialog
 
-This package just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js. For now, it provides just one function `createConfirmDialog` that does all the hard work for you.
+Convert your dialogs to async functions and use them all over your project!
+
+This plugin just makes it simple to create, reuse, promisify and build chains of modal dialogs in Vue.js. It provides just one function `createConfirmDialog` that does all the hard work for you.
 
 > New documentation is ready! Try a new [site](https://vcd-docs.netlify.app) that contains all the docs of the project!
 > [vcd-docs.netlify.app](https://vcd-docs.netlify.app)
@@ -17,7 +19,7 @@ in 3 steps
 
 ### Step 0
 
-Add the package to your `node_modules`
+Add the plugin to your `node_modules`
 
 ```bash
 npm i vuejs-confirm-dialog
@@ -96,7 +98,7 @@ onCancel(() => {
 
 ### Two ways of usage
 
-The package lets you decide how to use it. The first way is to use hooks:
+The plugin lets you decide how to use it. The first way is to use hooks:
 
 - `onConfirm` - hook gets a callback that runs after the user confirmed the modal message
 - `onCancel` - run callback if the user decides to click cancel
@@ -166,7 +168,7 @@ const login = async () => {
 
 Unfortunately, the way of passing props is not so clear to the developers. The problem occurs when you try to reuse a dialog instance already created with `createConfirmDialog`. See also the [issue](https://github.com/harmyderoman/vuejs-confirm-dialog/issues/21).
 
-Let's consider this process step by step. Props values ​​are assigned three times, the first time is default props values, in the component, this package does not show up on them in any way. The second time occurs on creating an instance of the dialog, let's define these values ​​as initial props. The third time passing values ​​is possible when the user prompts the dialog using the `reveal` method. If you don't set the props behavior options, then each time you pass values, this data will be saved.
+Let's consider this process step by step. Props values ​​are assigned three times, the first time is default props values, in the component, this plugin does not show up on them in any way. The second time occurs on creating an instance of the dialog, let's define these values ​​as initial props. The third time passing values ​​is possible when the user prompts the dialog using the `reveal` method. If you don't set the props behavior options, then each time you pass values, this data will be saved.
 
 For example, if you have an alert component and you called it with the message "Authorization failed!", then next time if you don't pass a new message value, it will show this message again.
 
