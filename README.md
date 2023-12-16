@@ -25,7 +25,7 @@ Add the plugin to your `node_modules`
 npm i vuejs-confirm-dialog
 ```
 
-### Step 1
+### Step 1 (optional)
 
 Install the plugin:
 
@@ -52,7 +52,14 @@ Add `DialogsWrapper` to `App.vue` template:
   <!-- Don't need import the component, if you installed the plugin -->
   <DialogsWrapper />
 </template>
+
+<script setup>
+// import wrapper manually, if you skiped step 1  
+import { DialogsWrapper } from 'vuejs-confirm-dialog'
+
+</script>
 ```
+
 
 And that's it. Now you can use it.
 
