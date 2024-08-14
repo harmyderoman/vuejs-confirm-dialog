@@ -38,8 +38,7 @@
 	},
 	"peerDependencies": {
 		"@vue/composition-api": "^1.0.0",
-		"vue": "^2.0.0 || >=3.0.0",
-		"vue-template-compiler": "^2.2.0"
+		"vue": "^2.0.0 || >=3.0.0"
 	},
 	"peerDependenciesMeta": {
 		"@vue/composition-api": {
@@ -68,7 +67,6 @@
 		"vitest": "^0.23.4",
 		"vue": "^3.3.4",
 		"vue-github-button": "^3.1.0",
-		"vue-template-compiler": "^2.7.14",
 		"vue-tsc": "^0.31.4"
 	},
 	"pnpm": {
