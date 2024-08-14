@@ -1,15 +1,4 @@
-<template>
-  <component
-    v-for="dialogData in DialogsStore"
-    :is="dialogData.dialog"
-    v-bind="dialogData.props"
-    @confirm="dialogData.confirm"
-    @cancel="dialogData.cancel"
-    :key="dialogData.id"
-  ></component>
-</template>
-
-<script lang="ts">
+import { h } from 'vue'
 import { useDialogWrapper } from './useDialogWrapper'
 import { defineComponent } from 'vue-demi'
 
@@ -22,9 +11,14 @@ export default defineComponent({
   setup() {
     const { DialogsStore } = useDialogWrapper()
 
-    return {
-      DialogsStore
-    }
+    return () => DialogsStore.map(dialogData => {
+      return h(dialogData.dialog, { 
+        is: dialogData.dialog,
+        onConfirm: dialogData.confirm,
+        onCancel: dialogData.cancel,
+        key: dialogData.id,
+        ...dialogData.props
+      })
+    })
   }
 })
-</script>

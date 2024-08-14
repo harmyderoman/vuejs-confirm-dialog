@@ -1,5 +1,5 @@
 import { createConfirmDialog } from './createConfirmDialog'
-import DialogsWrapper from './DialogsWrapper.vue'
+import DialogsWrapper from './DialogsWrapper'
 
 import type { UseDialogWrapperReturn, DialogData } from './useDialogWrapper'
 import type { ComponentProps } from './createConfirmDialog'

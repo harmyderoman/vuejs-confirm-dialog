@@ -1,5 +1,5 @@
 import { ref, watch, computed, Component, VNodeProps, AllowedComponentProps } from 'vue-demi'
-import type { ComputedRef, DefineComponent } from 'vue-demi'
+import type { ComputedRef, DefineComponent, UnwrapRef } from 'vue-demi'
 import { useDialogWrapper } from './useDialogWrapper'
 import {
   EventHookOn,
@@ -60,10 +60,11 @@ export function createConfirmDialog
 
   const setAttrs = (attrs: ComponentProps<C> | null) => {
     if(!attrs) {
-      propsRef.value = {}
+      propsRef.value = {} as UnwrapRef<ComponentProps<C>>
       return
     }
     for (const prop in attrs) {
+      // @ts-ignore
       propsRef.value[prop] = attrs[prop]
     }
    }
@@ -102,6 +103,7 @@ export function createConfirmDialog
       isRevealed,
       confirm,
       cancel,
+      // @ts-ignore
       props: propsRef.value,
       close,
       revealed
