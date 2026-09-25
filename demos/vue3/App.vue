@@ -5,11 +5,13 @@ import LoaderExample from './examples/LoaderExample.vue'
 import TableExample from './examples/TableExample.vue'
 import AlertExample from './examples/AlertExample.vue'
 import PropsBehavior from './examples/PropsBehavior.vue'
+import ThemeToggle from './components/ThemeToggle.vue'
 
 </script>
 
 <template>
   <article class="main-container">
+    <ThemeToggle />
     <IntroductionPart />
     <BasicExample />
     <AlertExample />
@@ -42,15 +44,9 @@ import PropsBehavior from './examples/PropsBehavior.vue'
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
-  background-color: white;
-  box-shadow: #f2f2f2;
-}
-h1, h2 {
-  text-align: center;
 }
 
 body {
-  background-color: #f2f2f2;
   height: 100%;
   font-size: 16px;
 }

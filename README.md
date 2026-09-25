@@ -13,6 +13,24 @@ How does it work? The idea is simple, this function -- `createConfirmDialog` get
 
 You can work with dialogs like with promises or with hooks that the dialog instance generates for you.
 
+## Vue 2 support (legacy line)
+
+This `0.x` line (`0.6.0` and below) is the **last one to support Vue 2** (via `vue-demi` / `@vue/composition-api`). A future `1.0.0` release will drop Vue 2 support and target Vue 3 only.
+
+If your project is on Vue 2, pin your install to this line so you don't accidentally pick up a `1.0.0+` release later:
+
+```bash
+npm i vuejs-confirm-dialog@^0.6.0
+```
+
+Vue 2 also needs the `@vue/composition-api` plugin installed and set up in your project (it's an optional peer dependency of this package):
+
+```bash
+npm i @vue/composition-api
+```
+
+Vue 3 projects don't need any of this — just install normally (see below) and it works out of the box.
+
 ## Installation
 
 in 3 steps
@@ -195,6 +213,19 @@ The simplest example:
     { chore: true, keepInitial: true }
   )
 ```
+
+There's also a third option:
+
+- `closeDelay` - milliseconds to wait before unmounting the dialog component after it's closed (confirm/cancel/close). Defaults to `0` (unmount immediately). Useful if your modal component has its own exit transition/animation and needs a bit of time on screen after `confirm`/`cancel` before being removed.
+
+```javascript
+  const dialog = createConfirmDialog(
+    ModalComponent,
+    { message: 'Some message...' },
+    { chore: false, keepInitial: false, closeDelay: 300 } // give a 300ms exit transition time to finish
+  )
+```
+
 ## Using inside Options API
 
 If you prefer you can use it with Options API inside methods.
@@ -272,6 +303,12 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 *   [x] Improve docs( reuse, passing props ...)
 
 *   [x] More examples
+
+*   [x] Fix TypeScript error when the dialog component has default prop values ([#31](https://github.com/harmyderoman/vuejs-confirm-dialog/issues/31))
+
+*   [x] `closeDelay` option to support exit transitions ([#34](https://github.com/harmyderoman/vuejs-confirm-dialog/issues/34))
+
+*   [ ] Drop Vue 2 support, Vue 3 only `1.0.0`
 
 ## Thanks
 

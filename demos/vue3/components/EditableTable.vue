@@ -3,10 +3,17 @@ import { ref } from 'vue'
 import PopupEdit from './PopupEdit.vue'
 import { createConfirmDialog } from './../../../src/index'
 
+interface TableRow {
+  id: number
+  name: string
+  job: string
+  color: string
+}
+
 const editValue = (
     val: string | number,
-    rowId: string | number,
-    key: string | number,
+    rowId: number,
+    key: keyof TableRow,
     event: any
   ) => {
 
@@ -14,7 +21,8 @@ const editValue = (
   popup.reveal({ value: val, event: event })
 
   popup.onConfirm((data) => {
-    table.value[rowId][key] = data
+    const row = table.value[rowId] as Record<keyof TableRow, string | number>
+    row[key] = data
   })
 }
 
@@ -25,7 +33,7 @@ const tableHead = ref({
   color: 'Favorite Color',
 })
 
-const table = ref([
+const table = ref<TableRow[]>([
   {
     id: 1,
     name: 'Cy Ganderton',
