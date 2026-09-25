@@ -13,27 +13,14 @@ How does it work? The idea is simple, this function -- `createConfirmDialog` get
 
 You can work with dialogs like with promises or with hooks that the dialog instance generates for you.
 
-## Vue 2 support (legacy line)
+## Breaking changes in v1.0
 
-This `0.x` line (`0.6.0` and below) is the **last one to support Vue 2** (via `vue-demi` / `@vue/composition-api`). A future `1.0.0` release will drop Vue 2 support and target Vue 3 only.
-
-If your project is on Vue 2, pin your install to this line so you don't accidentally pick up a `1.0.0+` release later:
-
-```bash
-npm i vuejs-confirm-dialog@^0.6.0
-```
-
-Vue 2 also needs the `@vue/composition-api` plugin installed and set up in your project (it's an optional peer dependency of this package):
-
-```bash
-npm i @vue/composition-api
-```
-
-Vue 3 projects don't need any of this — just install normally (see below) and it works out of the box.
+- **Vue 2 is no longer supported.** `v1.0.0` targets Vue 3 (`^3.5.0`) only. If your project is on Vue 2, use the `legacy` branch / pin to `npm i vuejs-confirm-dialog@^0.6.0`, which is the last release with Vue 2 support (via `vue-demi`).
+- **`<DialogsWrapper/>` is removed.** The library now mounts its own render root automatically the first time you call `reveal()` — delete `<DialogsWrapper/>` from your app's template, it's no longer needed (and no longer exported).
 
 ## Installation
 
-in 3 steps
+in 2 steps
 
 ### Step 0
 
@@ -43,9 +30,9 @@ Add the plugin to your `node_modules`
 npm i vuejs-confirm-dialog
 ```
 
-### Step 1 (optional)
+### Step 1(recommended)
 
-Install the plugin:
+Install the plugin. This is recommended (not strictly required) — installing it lets dialog components access anything your app provides via plugins/`provide()` (routing, i18n, stores, etc.). Without it, dialogs still work, just without that inherited context.
 
 ```js
 // main.js
@@ -55,29 +42,6 @@ import * as ConfirmDialog from 'vuejs-confirm-dialog'
 
 createApp(App).use(ConfirmDialog).mount('#app')
 ```
-
-### Step 2
-
-Add `DialogsWrapper` to `App.vue` template:
-
-```html
-<!-- App.vue -->
-<template>
-  <div class="app">
-  </div>
-
-  <!-- put it in the template of your App.vue file to make dialogs work -->
-  <!-- Don't need import the component, if you installed the plugin -->
-  <DialogsWrapper />
-</template>
-
-<script setup>
-// import wrapper manually, if you skiped step 1  
-import { DialogsWrapper } from 'vuejs-confirm-dialog'
-
-</script>
-```
-
 
 And that's it. Now you can use it.
 
@@ -226,6 +190,10 @@ There's also a third option:
   )
 ```
 
+### Exit transitions
+
+Dialogs are rendered through Vue's [`<TransitionGroup>`](https://vuejs.org/guide/built-ins/transition-group.html), so CSS-based enter/leave transitions work out of the box — just give your modal component's root element matching transition classes (e.g. `.v-leave-active`, `.v-leave-to`), the same way you'd style any `<TransitionGroup>` child. This is independent of `closeDelay` above; use whichever fits your case (or both).
+
 ## Using inside Options API
 
 If you prefer you can use it with Options API inside methods.
@@ -288,6 +256,41 @@ pnpm run demo
 
 The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
+## Vue 2 support (legacy line)
+
+This `0.x` line (`0.6.0` and below) is the **last one to support Vue 2** (via `vue-demi` / `@vue/composition-api`). A future `1.0.0` release will drop Vue 2 support and target Vue 3 only.
+
+If your project is on Vue 2, pin your install to this line so you don't accidentally pick up a `1.0.0+` release later:
+
+```bash
+npm i vuejs-confirm-dialog@^0.6.0
+```
+
+Vue 2 also needs the `@vue/composition-api` plugin installed and set up in your project (it's an optional peer dependency of this package):
+
+```bash
+npm i @vue/composition-api
+```
+
+Also you have to add `DialogsWrapper` to `App.vue` template:
+
+```html
+<!-- App.vue -->
+<template>
+  <div class="app">
+  </div>
+
+  <!-- put it in the template of your App.vue file to make dialogs work -->
+  <!-- Don't need import the component, if you installed the plugin -->
+  <DialogsWrapper />
+</template>
+
+<script setup> 
+import { DialogsWrapper } from 'vuejs-confirm-dialog'
+
+</script>
+```
+
 ## Roadmap
 
 *   [x] Make it work!
@@ -308,7 +311,11 @@ The demo is styled by beautiful [daisyUI](https://daisyui.com/).
 
 *   [x] `closeDelay` option to support exit transitions ([#34](https://github.com/harmyderoman/vuejs-confirm-dialog/issues/34))
 
-*   [ ] Drop Vue 2 support, Vue 3 only `1.0.0`
+*   [x] Drop Vue 2 support, Vue 3 only `1.0.0`
+
+*   [x] Auto-mounted render root — no more manually placing `<DialogsWrapper/>`
+
+*   [x] Native `<TransitionGroup>` support for exit transitions
 
 ## Thanks
 

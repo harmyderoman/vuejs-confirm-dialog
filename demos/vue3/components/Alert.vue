@@ -51,5 +51,18 @@ hideAlert()
   cursor: pointer;
   transition: 0.3s;
 }
+
+/* The library wraps every dialog in <TransitionGroup> with no default
+   `name`, so these are Vue's default transition classes - just add
+   matching CSS on the alert's root element, no extra setup needed. */
+.alert.v-enter-active,
+.alert.v-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.alert.v-enter-from,
+.alert.v-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 </style>
 

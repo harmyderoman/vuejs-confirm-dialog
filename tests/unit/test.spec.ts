@@ -1,14 +1,13 @@
-import { createConfirmDialog } from './../../src/index'
+import { createConfirmDialog, install } from './../../src/index'
 import { useDialogWrapper } from './../../src/useDialogWrapper'
+import { __resetForTests } from './../../src/mountDialogsRoot'
 import { useSetup } from '../utils'
-import { Component, nextTick } from 'vue'
+import { Component, createApp, defineComponent, h, inject, nextTick } from 'vue'
 import { useConfirmDialog } from '@vueuse/core'
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
 import DialogComp from './../components/DialogComp'
 import DialogWithDefaults from './../components/DialogWithDefaults.vue'
 import { ref } from 'vue'
-import DialogsWrapper from './../../src/DialogsWrapper'
 
 const INITIAL_MESSAGE = "Initial Message"
 
@@ -17,6 +16,7 @@ const clearDialogsStore = function () {
   while (DialogsStore.length > 0) {
     DialogsStore.pop()
   }
+  __resetForTests()
 }
 
 describe('Props Behavior Options', () => {
@@ -338,39 +338,64 @@ describe('closeDelay option (#34)', () => {
   })
 })
 
-describe('DialogsWrapper.vue', () => {
-  it('should be defined', () => {
-    expect(DialogsWrapper).toBeDefined()
-
-    clearDialogsStore()
-  })
-
-  it('should mount component to the document', async () => {
-    const wrapper = mount(DialogsWrapper)
-
-    const { addDialog } = useDialogWrapper()
-    const { isRevealed, confirm, cancel } = useConfirmDialog()
-    addDialog({
-      dialog: DialogComp,
-      isRevealed,
-      confirm,
-      cancel,
-      props: {},
-      id: 0,
-      close: function (): void {
-        throw new Error('Function not implemented.')
-      },
-      revealed: ref(false)
-    })
-
+describe('auto-mounted dialogs root', () => {
+  it('mounts a root into document.body on first reveal and removes it from the DOM on confirm', async () => {
+    const { reveal } = createConfirmDialog(DialogWithDefaults, { title: 'Auto Mount Test' })
+    reveal({ message: 'hello from auto mount' })
     await nextTick()
 
-    const modal = wrapper.findComponent(DialogComp)
-    expect(modal.exists()).toBe(true)
+    const container = document.getElementById('vuejs-confirm-dialog-root')
+    expect(container).not.toBeNull()
+    expect(container!.textContent).toContain('hello from auto mount')
+
+    const { DialogsStore } = useDialogWrapper()
+    DialogsStore[0].confirm()
+    // DialogsRoot renders the list through <TransitionGroup>, which defers
+    // the actual DOM removal through its leave lifecycle even with no CSS
+    // transition defined - a couple of ticks/a short wait covers that.
+    await nextTick()
+    await nextTick()
+    await new Promise((resolve) => setTimeout(resolve, 20))
+
+    expect(container!.textContent).not.toContain('hello from auto mount')
 
     clearDialogsStore()
   })
 
+  it('lets dialog components inject values provided by the host app via install()', async () => {
+    const app = createApp({ render: () => null })
+    app.provide('testInjectionKey', 'injected-value')
+    install(app)
+
+    const InjectingDialog = defineComponent({
+      name: 'InjectingDialog',
+      emits: ['confirm', 'cancel'],
+      setup() {
+        const value = inject('testInjectionKey', 'fallback')
+        return () => h('div', value as string)
+      },
+    })
+
+    const { reveal } = createConfirmDialog(InjectingDialog)
+    reveal()
+    await nextTick()
+
+    const container = document.getElementById('vuejs-confirm-dialog-root')
+    expect(container!.textContent).toContain('injected-value')
+
+    clearDialogsStore()
+  })
+
+  it('still renders dialogs without install() called, just without inherited context', async () => {
+    const { reveal } = createConfirmDialog(DialogComp)
+    reveal()
+    await nextTick()
+
+    const container = document.getElementById('vuejs-confirm-dialog-root')
+    expect(container).not.toBeNull()
+
+    clearDialogsStore()
+  })
 })
 
 describe('useDialogWrapper', () => {
