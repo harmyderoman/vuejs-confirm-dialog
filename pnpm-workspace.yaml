@@ -1,0 +1,10 @@
+overrides:
+  vue-demi: ^0.14.10
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: true
+  vue-demi: true
+minimumReleaseAgeExclude:
+  - '@vitest/mocker@5.0.2'
+  - '@vitest/spy@5.0.2'
+  - vitest@5.0.2

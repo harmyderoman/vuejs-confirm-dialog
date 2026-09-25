@@ -11,14 +11,15 @@ export default defineComponent({
   setup() {
     const { DialogsStore } = useDialogWrapper()
 
-    return () => DialogsStore.map(dialogData => {
-      return h(dialogData.dialog, { 
-        is: dialogData.dialog,
-        onConfirm: dialogData.confirm,
-        onCancel: dialogData.cancel,
-        key: dialogData.id,
-        ...dialogData.props
+    return () =>
+      DialogsStore.map((dialogData) => {
+        return h(dialogData.dialog, {
+          is: dialogData.dialog,
+          onConfirm: dialogData.confirm,
+          onCancel: dialogData.cancel,
+          key: dialogData.id,
+          ...dialogData.props,
+        })
       })
-    })
-  }
+  },
 })

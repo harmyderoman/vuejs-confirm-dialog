@@ -9,11 +9,11 @@ function install(app: App) {
   app.component('DialogsWrapper', DialogsWrapper)
 }
 
-export { 
-  createConfirmDialog, 
-  DialogsWrapper, 
-  install, 
+export {
+  createConfirmDialog,
+  DialogsWrapper,
+  install,
   ComponentProps,
-  UseDialogWrapperReturn, 
-  DialogData 
+  UseDialogWrapperReturn,
+  DialogData,
 }
