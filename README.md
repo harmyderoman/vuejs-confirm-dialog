@@ -18,6 +18,10 @@ You can work with dialogs like with promises or with hooks that the dialog insta
 - **Vue 2 is no longer supported.** `v1.0.0` targets Vue 3 (`^3.5.0`) only. If your project is on Vue 2, use the `legacy` branch / pin to `npm i vuejs-confirm-dialog@^0.6.0`, which is the last release with Vue 2 support (via `vue-demi`).
 - **`<DialogsWrapper/>` is removed.** The library now mounts its own render root automatically the first time you call `reveal()` — delete `<DialogsWrapper/>` from your app's template, it's no longer needed (and no longer exported).
 
+## SSR / Nuxt
+
+Works with SSR (Nuxt included) as a regular Vue plugin — `app.use(ConfirmDialog)` in your Nuxt plugin/`main.js` is all that's needed, no separate Nuxt module required. Dialogs only ever mount client-side (the render root is created lazily on the first `reveal()`, which only happens in response to user interaction, i.e. after hydration), so nothing touches `document` during the server render.
+
 ## Installation
 
 in 2 steps

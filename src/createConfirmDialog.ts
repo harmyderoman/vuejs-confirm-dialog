@@ -111,6 +111,11 @@ export function createConfirmDialog<C extends Component>(
   const DIALOG_ID = getDialogId()
 
   onReveal((props?: ComponentProps<C>) => {
+    // SSR: dialogs are client-only. Bail out before touching `revealed`/props
+    // or pushing into the shared `DialogsStore` - `setup()` re-runs on the
+    // client during hydration, where `reveal()` fires again for real.
+    if (typeof document === 'undefined') return
+
     revealed.value = true
     if (props) setAttrs(props as ComponentProps<C>)
 

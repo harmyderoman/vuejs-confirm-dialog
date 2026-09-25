@@ -50,9 +50,16 @@ const DialogsRoot = defineComponent({
  * app's context (captured via `setHostApp`) so dialog components can
  * `inject()` values provided by the consumer's app; without `install()`
  * called first, dialogs still render, just without that inherited context.
+ *
+ * SSR-safe: `reveal()` (which triggers this) is only ever meant to run in
+ * response to user interaction, so it should never fire during a server
+ * render - but if it does (e.g. a misuse that reveals eagerly in `setup()`),
+ * there's no `document` to mount into yet. Skip without flipping `mounted`,
+ * so the real mount still happens on the next `reveal()` once hydrated.
  */
 export function ensureMounted() {
   if (mounted) return
+  if (typeof document === 'undefined') return
   mounted = true
 
   const container = document.createElement('div')

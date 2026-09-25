@@ -4,7 +4,7 @@ import { __resetForTests } from './../../src/mountDialogsRoot'
 import { useSetup } from '../utils'
 import { Component, createApp, defineComponent, h, inject, nextTick } from 'vue'
 import { useConfirmDialog } from '@vueuse/core'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import DialogComp from './../components/DialogComp'
 import DialogWithDefaults from './../components/DialogWithDefaults.vue'
 import { ref } from 'vue'
@@ -393,6 +393,29 @@ describe('auto-mounted dialogs root', () => {
 
     const container = document.getElementById('vuejs-confirm-dialog-root')
     expect(container).not.toBeNull()
+
+    clearDialogsStore()
+  })
+
+  it('does not throw when reveal() happens without a document (SSR), and mounts for real afterwards', async () => {
+    vi.stubGlobal('document', undefined)
+
+    let threw = false
+    const { reveal } = createConfirmDialog(DialogComp)
+    try {
+      reveal()
+    } catch {
+      threw = true
+    }
+    expect(threw).toBe(false)
+
+    vi.unstubAllGlobals()
+
+    // simulates hydration completing: the next reveal() should mount for real
+    reveal()
+    await nextTick()
+
+    expect(document.getElementById('vuejs-confirm-dialog-root')).not.toBeNull()
 
     clearDialogsStore()
   })
