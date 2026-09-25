@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1]
+
+### Fixed
+
+- SSR safety: calling `reveal()` server-side (e.g. Nuxt SSR) is now a full no-op — it no longer mutates the shared dialogs store or dialog props, and doesn't touch `document`. Previously only the DOM mount was skipped, but the store mutation still ran server-side, which could leak dialog entries across requests on a long-lived Node process. `setup()` re-runs client-side during hydration, so `reveal()` fires again for real at that point. Verified against a real `@vue/server-renderer` render across repeated simulated requests, not just a DOM-mocked test environment.
+
+### Added
+
+- SSR / Nuxt usage documented in the README — works as a regular Vue plugin, no separate Nuxt module needed.
+
 ## [1.0.0]
 
 ### Breaking
@@ -41,5 +51,6 @@ Last release to support Vue 2 (via `vue-demi`) — a Vue 3-only `1.0.0` is comin
 - Updated dependencies to the latest versions still compatible with Vue 2 (`@vueuse/core` → 11.3.0, `vue-demi` → 0.14.10, dev tooling to latest)
 - Restored CI (lint + build + test on push/PR)
 
+[1.0.1]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.1
 [1.0.0]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.0
 [0.6.0]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v0.6.0
