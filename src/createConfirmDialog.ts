@@ -5,9 +5,10 @@ import {
   Component,
   VNodeProps,
   AllowedComponentProps,
-} from 'vue-demi'
-import type { ComputedRef, UnwrapRef } from 'vue-demi'
+} from 'vue'
+import type { ComputedRef, UnwrapRef } from 'vue'
 import { useDialogWrapper } from './useDialogWrapper'
+import { ensureMounted } from './mountDialogsRoot'
 import {
   EventHookOn,
   useConfirmDialog,
@@ -112,6 +113,8 @@ export function createConfirmDialog<C extends Component>(
   onReveal((props?: ComponentProps<C>) => {
     revealed.value = true
     if (props) setAttrs(props as ComponentProps<C>)
+
+    ensureMounted()
 
     addDialog({
       id: DIALOG_ID,

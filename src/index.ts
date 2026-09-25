@@ -1,17 +1,16 @@
 import { createConfirmDialog } from './createConfirmDialog'
-import DialogsWrapper from './DialogsWrapper'
+import { setHostApp } from './mountDialogsRoot'
 
 import type { UseDialogWrapperReturn, DialogData } from './useDialogWrapper'
 import type { ComponentProps } from './createConfirmDialog'
-import { App } from 'vue-demi'
+import { App } from 'vue'
 
 function install(app: App) {
-  app.component('DialogsWrapper', DialogsWrapper)
+  setHostApp(app)
 }
 
 export {
   createConfirmDialog,
-  DialogsWrapper,
   install,
   ComponentProps,
   UseDialogWrapperReturn,

@@ -3,12 +3,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { defineConfig } from 'vite'
-
-// for Vue 3 use this:
 import vue from '@vitejs/plugin-vue'
-
-// for Vue 2 use this:
-// import { createVuePlugin as vue } from 'vite-plugin-vue2'
 
 const path = require('path')
 
@@ -19,11 +14,6 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-  },
-  optimizeDeps: {
-    include: [
-      'vue-demi'
-    ]
   },
   build: {
     lib: {
@@ -39,9 +29,6 @@ export default defineConfig({
         },
       },
     },
-    commonjsOptions: {
-      include: [/vue-demi/, /node_modules/]
-    }
   },
   test: {
     environment: 'happy-dom'

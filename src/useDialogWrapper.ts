@@ -1,4 +1,4 @@
-import { markRaw, Ref, reactive, DefineComponent } from 'vue-demi'
+import { markRaw, Ref, reactive, DefineComponent } from 'vue'
 import { ComponentProps } from './index'
 
 export type UseDialogWrapperReturn = {

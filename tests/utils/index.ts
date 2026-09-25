@@ -5,14 +5,15 @@ import {
   h,
   provide,
   ref,
+  Component,
   InjectionKey,
   Ref,
-} from 'vue-demi'
+} from 'vue'
 
 type InstanceType<V> = V extends { new (...arg: any[]): infer X } ? X : never
 type VM<V> = InstanceType<V> & { unmount(): void }
 
-export function mount<V>(Comp: V) {
+export function mount<V extends Component>(Comp: V) {
   const el = document.createElement('div')
   const app = createApp(Comp)
 

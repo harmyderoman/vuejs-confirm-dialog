@@ -5,6 +5,7 @@ import LoaderExample from './examples/LoaderExample.vue'
 import TableExample from './examples/TableExample.vue'
 import AlertExample from './examples/AlertExample.vue'
 import PropsBehavior from './examples/PropsBehavior.vue'
+import TransitionExample from './examples/TransitionExample.vue'
 import ThemeToggle from './components/ThemeToggle.vue'
 
 </script>
@@ -14,23 +15,19 @@ import ThemeToggle from './components/ThemeToggle.vue'
     <ThemeToggle />
     <IntroductionPart />
     <BasicExample />
+    <TransitionExample />
     <AlertExample />
     <LoaderExample />
     <TableExample />
     <PropsBehavior />
   </article>
-
-  <!-- put it in the template of your App.vue file to make this library work -->
-  <div class="alerts-container">
-    <DialogsWrapper />
-  </div>
 </template>
 
 <style>
 @import 'https://cdn.jsdelivr.net/npm/daisyui@1.19.0/dist/full.css';
 @import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css';
 
-.alerts-container {
+#vuejs-confirm-dialog-root {
   position: fixed;
   display: flex;
   flex-direction: column;
