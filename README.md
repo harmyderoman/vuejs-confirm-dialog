@@ -126,6 +126,24 @@ You can change props values during the calling `reveal` function by passing to i
 
 And finally, you can pass data to emit functions inside your modal dialog component: `confirm` and `cancel`. Hooks `onConfirm` and `onCancel` will receive this data. Also, it will be passed by Promise, so you can use the async/await syntax if you prefer.
 
+With TypeScript, the type of `data` comes from your component's `defineEmits`:
+
+```html
+<!-- PickNumberDialog.vue -->
+<script setup lang="ts">
+defineEmits<{ confirm: [value: number]; cancel: [reason: string] }>()
+</script>
+```
+
+```typescript
+const { data, isCanceled } = await createConfirmDialog(PickNumberDialog).reveal()
+if (!isCanceled) {
+  data // number | undefined
+}
+```
+
+Untyped emits (`defineEmits(['confirm', 'cancel'])`) give `any`, as before.
+
 The full example, that displays passing data, reusing, and modal chains:
 
 ```html
@@ -167,32 +185,74 @@ For example, if you have an alert component and you called it with the message "
 
 Perhaps it will be convenient if every time after closing the dialog, the values ​​of the props will be reset to the initial or even default values. For this functionality, props transfer settings have been added.
 
-There are only two options:
+That's what the `resetProps` option is for — it decides what happens to props after the dialog closes (confirm, cancel or `close()`):
 
-- `chore` - if `true` will tell to function reset values after closing dialog
-- `keepInitial` - if `true` reset props values to initial values, otherwise to default values of the component
-
-The simplest example:
+- `'none'` (default) - keep the last passed values
+- `'initial'` - go back to the values passed to `createConfirmDialog`
+- `'defaults'` - drop everything, so the component's own prop defaults apply
 
 ```javascript
   const dialog = createConfirmDialog(
     ModalComponent,
     { message: 'Some message...' }, // Initial props values
-    { chore: true, keepInitial: true }
+    { resetProps: 'initial' }
   )
 ```
 
-There's also a third option:
+> The older `chore`/`keepInitial` options still work but are deprecated and will be removed in 2.0 (you'll see a one-time console warning): `{ chore: true, keepInitial: true }` is `resetProps: 'initial'`, `{ chore: true }` is `resetProps: 'defaults'`.
 
-- `closeDelay` - milliseconds to wait before unmounting the dialog component after it's closed (confirm/cancel/close). Defaults to `0` (unmount immediately). Useful if your modal component has its own exit transition/animation and needs a bit of time on screen after `confirm`/`cancel` before being removed.
+There's also `closeDelay` - milliseconds to wait before unmounting the dialog component after it's closed. Defaults to `0` (unmount immediately). Useful if your modal component has its own exit animation and needs a bit of time on screen after `confirm`/`cancel` before being removed.
 
 ```javascript
   const dialog = createConfirmDialog(
     ModalComponent,
     { message: 'Some message...' },
-    { chore: false, keepInitial: false, closeDelay: 300 } // give a 300ms exit transition time to finish
+    { closeDelay: 300 } // give a 300ms exit transition time to finish
   )
 ```
+
+## Updating props of an open dialog
+
+`update(props)` changes props of the dialog at any time, including while it's open — handy for progress dialogs or toasts. The pending `reveal()` promise is not affected.
+
+```javascript
+const progress = createConfirmDialog(ProgressToast, { done: 0, total: 40 })
+progress.reveal()
+
+for (const [i, file] of files.entries()) {
+  await upload(file)
+  progress.update({ done: i + 1 })
+}
+progress.close()
+```
+
+Calling `reveal()` on a dialog that's already open does the same: it updates the props and returns the same pending promise, instead of opening a second copy.
+
+## One instance — one open dialog
+
+An instance from `createConfirmDialog` is one dialog: it's either open or closed. To show several at the same time (toasts, stacked alerts), create an instance per dialog:
+
+```javascript
+const toast = (message) => createConfirmDialog(Toast, { message }).reveal()
+
+toast('Saved')
+toast('Uploaded 3 files') // both are on screen
+```
+
+## Rendering into your own container
+
+By default every dialog renders into a shared root in `document.body`, which is what you want for modals. For things like a toast stack, pass `target` — a CSS selector or an element — and the dialog is teleported there:
+
+```html
+<!-- App.vue -->
+<div id="toast-stack"></div>
+```
+
+```javascript
+createConfirmDialog(Toast, { message }, { target: '#toast-stack' }).reveal()
+```
+
+If the target isn't in the DOM when the dialog is revealed, it falls back to the default root and logs a warning.
 
 ### Exit transitions
 
@@ -245,9 +305,16 @@ setTimeout(() => {
 }, 3000)
 ```
 
-It also doesn't trigger any hooks.
+It doesn't call `onConfirm`/`onCancel`, but the pending `reveal()` promise does resolve — with `{ isCanceled: true, closed: true }` — so `await dialog.reveal()` never hangs:
 
-If you need to close all dialog just call `dialog.closeAll()`.
+```javascript
+const { isCanceled, closed } = await dialog.reveal()
+if (closed) {
+  // closed from code, not by the user
+}
+```
+
+If you need to close all dialogs just call `dialog.closeAll()` — it closes each of them the same way.
 
 
 ## Demo
@@ -320,6 +387,8 @@ import { DialogsWrapper } from 'vuejs-confirm-dialog'
 *   [x] Auto-mounted render root — no more manually placing `<DialogsWrapper/>`
 
 *   [x] Native `<TransitionGroup>` support for exit transitions
+
+*   [x] `close()` resolves the `reveal()` promise, `update()`, `target`, typed `data`, `resetProps` (`1.1.0`)
 
 ## Thanks
 

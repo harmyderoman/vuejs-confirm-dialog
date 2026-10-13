@@ -21,20 +21,26 @@ import ThemeToggle from './components/ThemeToggle.vue'
     <TableExample />
     <PropsBehavior />
   </article>
+
+  <!-- alerts are rendered here via createConfirmDialog(..., { target: '#toast-stack' }) -->
+  <div id="toast-stack"></div>
 </template>
 
 <style>
 @import 'https://cdn.jsdelivr.net/npm/daisyui@1.19.0/dist/full.css';
 @import 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css';
 
-#vuejs-confirm-dialog-root {
+#toast-stack {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   top: 20px;
   right: 40px;
   width: 380px;
+  z-index: 200;
+}
+#toast-stack > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .main-container {
   padding: 15px 30px;

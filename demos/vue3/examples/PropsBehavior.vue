@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { createConfirmDialog } from './../../../src/index' // from 'vuejs-confirm-dialog' if using package
+import type { ResetPropsMode } from './../../../src/index'
 import SimpleModal from './../components/SimpleModal.vue'
 import { ref } from 'vue'
 import { debouncedWatch } from '@vueuse/core'
@@ -7,8 +8,8 @@ import { debouncedWatch } from '@vueuse/core'
 const defaultMessage = 'Open Dialog and confirm action'
 const message = ref(defaultMessage)
 
-const chore = ref(false)
-const keepInitial = ref(false)
+const resetModes: ResetPropsMode[] = ['none', 'initial', 'defaults']
+const resetProps = ref<ResetPropsMode>('none')
 const initMessage = ref('Initial message!')
 
 let openDialog = ref((_?: any) => {
@@ -19,7 +20,7 @@ const createDialog = () => {
   const { reveal, onConfirm, onCancel } = createConfirmDialog(
     SimpleModal,
     { msg: initMessage.value },
-    { chore: chore.value, keepInitial: keepInitial.value }
+    { resetProps: resetProps.value }
   )
 
   openDialog.value = reveal
@@ -48,37 +49,21 @@ debouncedWatch(
   <h2 class="card-title">Props Behavior Config Example</h2>
   <h3>Try different props configurations to see the difference</h3>
   <div>
-    <div class="flex flex-row">
-      <div class="form-control" style="width: fit-content;">
-        <label class="label cursor-pointer flex flex-col items-start gap-2">
-          <code>
-            { chore:
-            <i :style="{ color: chore ? 'hsl(var(--p))': 'hsl(var(--s))'}">
-              <code>{{ chore }}</code>
-            </i> ,
-          </code>
-          <input
-            type="checkbox"
-            class="toggle toggle-primary"
-            v-model="chore"
-          />
-        </label>
-      </div>
-      <div class="form-control" style="width: fit-content;">
-        <label class="label cursor-pointer flex flex-col items-start gap-2">
-          <code>
-            keepInitial:
-            <i :style="{ color: keepInitial ? 'hsl(var(--p))': 'hsl(var(--s))'}">
-              <code>{{ keepInitial }}</code>
-            </i> }
-          </code >
-          <input
-            type="checkbox"
-            class="toggle toggle-accent"
-            v-model="keepInitial"
-          />
-        </label>
-      </div>
+    <div class="flex flex-row gap-4 mb-2">
+      <code class="self-center">{ resetProps: '{{ resetProps }}' }</code>
+      <label
+        v-for="mode in resetModes"
+        :key="mode"
+        class="label cursor-pointer gap-2"
+      >
+        <input
+          type="radio"
+          class="radio radio-primary"
+          :value="mode"
+          v-model="resetProps"
+        />
+        <span class="label-text">{{ mode }}</span>
+      </label>
     </div>
       <div class="form-control w-full max-w-xs mb-2">
         <label class="label">Initial message: </label>
