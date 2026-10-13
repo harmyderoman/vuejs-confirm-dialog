@@ -20,6 +20,14 @@
 	"author": {
 		"name": "Roman Garmider"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/harmyderoman/vuejs-confirm-dialog.git"
+	},
+	"homepage": "https://github.com/harmyderoman/vuejs-confirm-dialog#readme",
+	"bugs": {
+		"url": "https://github.com/harmyderoman/vuejs-confirm-dialog/issues"
+	},
 	"keywords": [
 		"vue.js",
 		"vue",
