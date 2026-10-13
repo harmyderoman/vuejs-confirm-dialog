@@ -65,7 +65,11 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # creates the vX.Y.Z tag too; release notes = this version's CHANGELOG section
       - if: steps.version.outputs.changed == 'true'
         run: |
-          git tag "v${{ steps.version.outputs.local }}"
-          git push origin "v${{ steps.version.outputs.local }}"
+          VERSION=${{ steps.version.outputs.local }}
+          awk "/^## \\[$VERSION\\]/{f=1;next} /^## \\[|^\\[[0-9]/{f=0} f" CHANGELOG.md > notes.md
+          gh release create "v$VERSION" --title "v$VERSION" --notes-file notes.md --target "$GITHUB_SHA"
+        env:
+          GH_TOKEN: ${{ github.token }}
