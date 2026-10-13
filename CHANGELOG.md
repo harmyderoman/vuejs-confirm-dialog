@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2]
+
+### Fixed
+
+- `package.json` now declares `"type": "module"`, silencing the "reparsing as ES module" warnings vite/eslint printed on every command. The UMD build output was renamed from `dist/vuejs-confirm-dialog.umd.js` to `dist/vuejs-confirm-dialog.umd.cjs` (and `main`/`exports.require` updated to match) so `require('vuejs-confirm-dialog')` keeps working correctly for CJS consumers instead of Node misinterpreting it as ESM.
+
 ## [1.0.1]
 
 ### Fixed
@@ -51,6 +57,7 @@ Last release to support Vue 2 (via `vue-demi`) — a Vue 3-only `1.0.0` is comin
 - Updated dependencies to the latest versions still compatible with Vue 2 (`@vueuse/core` → 11.3.0, `vue-demi` → 0.14.10, dev tooling to latest)
 - Restored CI (lint + build + test on push/PR)
 
+[1.0.2]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.2
 [1.0.1]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.1
 [1.0.0]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.0
 [0.6.0]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v0.6.0

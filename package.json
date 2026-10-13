@@ -1,14 +1,15 @@
 {
 	"name": "vuejs-confirm-dialog",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"packageManager": "pnpm@12.6.0",
-	"main": "./dist/vuejs-confirm-dialog.umd.js",
+	"type": "module",
+	"main": "./dist/vuejs-confirm-dialog.umd.cjs",
 	"module": "./dist/vuejs-confirm-dialog.es.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"import": "./dist/vuejs-confirm-dialog.es.js",
-			"require": "./dist/vuejs-confirm-dialog.umd.js",
+			"require": "./dist/vuejs-confirm-dialog.umd.cjs",
 			"types": "./dist/index.d.ts"
 		}
 	},
