@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0]
+
+### Added
+
+- `update(props)` — change props of a dialog at any time, including while it's open (progress dialogs, toasts).
+- `target` option — render a dialog into your own container (CSS selector or element) instead of the shared root in `document.body`, e.g. a toast stack. Falls back to the default root with a warning if the target isn't in the DOM.
+- `resetProps: 'none' | 'initial' | 'defaults'` option, replacing `chore`/`keepInitial`.
+
+### Deprecated
+
+- `chore`/`keepInitial` — still work exactly as before, but log a one-time console warning and will be removed in 2.0. Migrate to `resetProps`: `{ chore: true, keepInitial: true }` → `resetProps: 'initial'`, `{ chore: true }` → `resetProps: 'defaults'`.
+- `reveal()` data and `onConfirm`/`onCancel` payloads are typed from the component's `defineEmits` (`confirm: [value: number]` → `data: number`). Untyped emits still give `any`.
+- Exported types: `ConfirmDialog`, `ConfirmDialogOptions`, `RevealResult`, `EmitPayload`, `ResetPropsMode`, `DialogTarget`.
+
+### Fixed
+
+- `close()` and `closeAll()` now resolve the pending `reveal()` promise with `{ isCanceled: true, closed: true }` instead of leaving it pending forever. Hooks are still not called.
+- `reveal()` on an already open dialog no longer adds a duplicate copy — it updates props and returns the same pending promise.
+- Re-revealing a dialog during its `closeDelay` no longer gets it removed when the old timer fires.
+- A second `confirm`/`cancel` from the same dialog (e.g. a double click during the exit animation) no longer fires hooks twice.
+- `resetProps: 'initial'` (`chore` + `keepInitial`) now also drops props that were only passed to `reveal()`.
+- Removing a dialog that's already gone no longer removes an unrelated one.
+
 ## [1.0.2]
 
 ### Fixed
@@ -57,6 +80,7 @@ Last release to support Vue 2 (via `vue-demi`) — a Vue 3-only `1.0.0` is comin
 - Updated dependencies to the latest versions still compatible with Vue 2 (`@vueuse/core` → 11.3.0, `vue-demi` → 0.14.10, dev tooling to latest)
 - Restored CI (lint + build + test on push/PR)
 
+[1.1.0]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.1.0
 [1.0.2]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.2
 [1.0.1]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.1
 [1.0.0]: https://github.com/harmyderoman/vuejs-confirm-dialog/releases/tag/v1.0.0

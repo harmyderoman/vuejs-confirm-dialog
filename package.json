@@ -1,6 +1,6 @@
 {
 	"name": "vuejs-confirm-dialog",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"packageManager": "pnpm@12.6.0",
 	"type": "module",
 	"main": "./dist/vuejs-confirm-dialog.umd.cjs",
@@ -39,7 +39,8 @@
 		"demo": "vite --host",
 		"lint": "eslint --fix src",
 		"build": "vite build && vue-tsc --emitDeclarationOnly",
-		"test": "vitest"
+		"test": "vitest",
+		"typecheck": "vue-tsc --noEmit -p tsconfig.test.json"
 	},
 	"dependencies": {
 		"@vueuse/core": "^15.0.0"
